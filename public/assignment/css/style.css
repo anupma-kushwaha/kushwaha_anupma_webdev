@@ -2,6 +2,110 @@ input.form-control {
     margin-bottom: 5px;
 }
 
-body {
-    padding-top: 36px;
+.container-fluid {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 15px;
+    padding-left: 15px;
 }
+
+body {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+.row_body {
+    padding: 5px;
+}
+
+.glyphicon {
+    color: white;
+}
+
+.glyphicon-blue {
+    color: #007acc;
+}
+
+span.glyphicon {
+    margin-right: 15px;
+}
+
+.navbar-default {
+    background-color: #0044cc;
+    border-color: white;
+    color: white;
+}
+
+.navbar-default .navbar-link,
+.navbar-default .navbar-brand {
+    color: white;
+}
+
+.col-xs-offset-right-10 {
+    padding-right: 10%;
+}
+
+.col-xs-offset-left-10 {
+    padding-left: 10%;
+}
+
+.col-xs-offset-left-20, .col-sm-offset-left-20 {
+    padding-left: 20%;
+}
+
+.v-divider {
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 1px;
+    height: 100%;
+    border-left: 1px solid red;
+}
+
+.textarea {
+    margin-bottom: 5px;
+}
+
+.btn-primary {
+    margin-bottom: 5px;
+}
+
+.heading {
+    padding: 5px;
+    width: auto;
+    height: auto;
+}
+
+.heading, .heading1 {
+    font-size: 20px;
+}
+
+.heading, .heading2 {
+    font-size: 15px;
+}
+
+.chooser {
+    font-size: 18px;
+}
+
+.img, .image, .youtube {
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+/*
+.td-left {
+    border-right: 1px solid #000;
+    width:41%;
+}
+
+.td-right {
+    border-left: 1px solid #000;
+    width:59%;
+}
+
+.table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
+    border: none;
+}
+*/
