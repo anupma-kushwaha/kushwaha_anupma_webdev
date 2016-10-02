@@ -13,6 +13,9 @@ input.form-control {
 body {
     padding-top: 70px;
     padding-bottom: 70px;
+    background-image: url("http://wallpapercave.com/wp/zmsglQf.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .row_body {
