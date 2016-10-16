@@ -1,0 +1,40 @@
+<div class="container-fluid row">
+
+    <div ng-show="model.error" class="alert alert-danger" role="alert">
+        {{model.error}}
+    </div>
+
+    <form>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <h1>Login</h1>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <input type="text"
+                       class="form-control"
+                       ng-model="model.username"
+                       placeholder="username">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <input type="password"
+                       class="form-control"
+                       ng-model="model.password"
+                       placeholder="password">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <a ng-click="model.login(model.username, model.password)" class="btn btn-primary btn-block">Login</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <a href="#/register" class="btn btn-success btn-block">Register</a>
+            </div>
+        </div>
+    </form>
+</div>

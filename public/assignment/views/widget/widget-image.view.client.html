@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="css/style.css" rel="stylesheet"/>
+    <link href="../css/style.css" rel="stylesheet"/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Widgets</title>
@@ -14,17 +14,17 @@
     <div class="container-fluid row">
         <div class="col-xs-2 col-sm-1">
             <div class="navbar-text navbar-left">
-                <a href="widget-list.html"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                <a href="widget-list.view.client.html"><span class="glyphicon glyphicon-chevron-left"></span></a>
             </div>
         </div>
         <div class="col-xs-8 col-sm-9">
             <div class="navbar-header">
-                <a class="navbar-brand" href="widget-list.html">Widget Edit</a>
+                <a class="navbar-brand" href="widget-list.view.client.html">Widget Edit</a>
             </div>
         </div>
         <div class="col-xs-2 col-sm-2">
             <div class="navbar-text navbar-right">
-                <a href="widget-list.html"><span class="glyphicon glyphicon-ok"></span></a>
+                <a href="widget-list.view.client.html"><span class="glyphicon glyphicon-ok"></span></a>
             </div>
         </div>
     </div>
@@ -39,7 +39,11 @@
         </div>
         <div class="form-group">
             <div class="col-xs-12">
-                <input type="text" class="form-control" id="imageName" placeholder="Name">
+                <input type="text"
+                       class="form-control"
+                       ng-model="imageName"
+                       id="imageName"
+                       placeholder="Name">
             </div>
         </div>
         <div class="form-group">
@@ -49,7 +53,11 @@
         </div>
         <div class="form-group">
             <div class="col-xs-12">
-                <input type="text" class="form-control" id="imageText" placeholder="Text">
+                <input type="text"
+                       class="form-control"
+                       ng-model="imageText"
+                       id="imageText"
+                       placeholder="Text">
             </div>
         </div>
         <div class="form-group">
@@ -59,7 +67,10 @@
         </div>
         <div class="form-group">
             <div class="col-xs-12">
-                <input type="text" class="form-control" id="imageURL"
+                <input type="text"
+                       class="form-control"
+                       ng-model="imageURL"
+                       id="imageURL"
                        placeholder="http://www.wallpaper.com/1232344">
             </div>
         </div>
@@ -70,7 +81,11 @@
         </div>
         <div class="form-group">
             <div class="col-xs-12">
-                <input type="text" class="form-control" id="imageSize" placeholder="100%">
+                <input type="text"
+                       class="form-control"
+                       ng-model="imageSize"
+                       id="imageSize"
+                       placeholder="100%">
             </div>
         </div>
         <div class="form-group">
@@ -80,13 +95,17 @@
         </div>
         <div class="form-group">
             <div class="col-xs-12">
-                <input type="file" class="form-control" id="imageUpload" placeholder="No file choosen">
+                <input type="file"
+                       class="form-control"
+                       ng-model="imageUpload"
+                       id="imageUpload"
+                       placeholder="No file choosen">
             </div>
         </div>
     </form>
     <div class="form-group">
         <div class="col-xs-12">
-            <a href="widget-list.html" class="btn btn-danger btn-block">Delete</a>
+            <a href="widget-list.view.client.html" class="btn btn-danger btn-block">Delete</a>
         </div>
     </div>
 </div>
@@ -96,7 +115,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="navbar-text pull-right">
-                    <a href="profile.html">
+                    <a href="../views/user/profile.html">
                         <span class="glyphicon glyphicon-user"></span>
                     </a>
                 </div>
