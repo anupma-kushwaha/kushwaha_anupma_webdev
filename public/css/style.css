@@ -1,0 +1,47 @@
+.container-fluid {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+    color: black;
+}
+
+body {
+    padding-top: 70px;
+    padding-bottom: 70px;
+    color: white;
+}
+
+.row {
+    margin-top: 10px;
+}
+
+.navbar-default {
+    background-color: #001433;
+}
+
+a{
+    color: lightgray;
+}
+a:hover, a:focus, label {
+    color: white;
+}
+
+.padding-10 {
+    padding-right: 10px;
+}
+
+.header {
+    padding-right: 80px;
+    color: white;
+    font-size: large;
+}
+
+.align-center{
+    text-align: center;
+}
+p {
+    font-size: medium;
+    text-align: justify;
+}
