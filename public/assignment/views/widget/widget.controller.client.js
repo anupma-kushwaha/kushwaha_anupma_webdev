@@ -86,7 +86,7 @@
 
         function updateWidget(widget) {
             WidgetService.updateWidget(vm.wgid, widget);
-            $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget/" + wgid);
+            $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget");
         }
 
         function deleteWidget() {
