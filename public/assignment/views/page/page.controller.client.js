@@ -6,7 +6,6 @@
         .controller("EditPageController", EditPageController);
 
     function PageListController($routeParams, PageService) {
-
         var vm = this;
         var uid = ($routeParams.uid);
         var wid = ($routeParams.wid);

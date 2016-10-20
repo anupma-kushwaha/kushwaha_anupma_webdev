@@ -47,12 +47,11 @@
     </div>
 </nav>
 
-
 <div class="container-fluid">
     <div class="row">
         <div class="hidden-xs col-sm-5">
             <ul class="list-group">
-                <li ng-repeat="page in model.pages" class="list-group-item">
+                <li ng-repeat="page in model.pages" class="list-group-item borderless">
                     <div class="row">
                         <div class="col-sm-9 col-sm-offset-left-20">
                             <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{page._id}}/widget"><label>{{page.name}}</label></a>

@@ -103,3 +103,7 @@ span.glyphicon {
     z-index: 10;
     align:right;
 }
+
+li.borderless {
+    border: 0 none;
+}

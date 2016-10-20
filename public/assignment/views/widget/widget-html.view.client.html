@@ -9,7 +9,7 @@
         <div class="col-xs-8 col-sm-9">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget">
-                    Edit Youtube Widget</a>
+                    Edit HTML Widget</a>
             </div>
         </div>
         <div class="col-xs-2 col-sm-2">
@@ -25,58 +25,15 @@
     <form>
         <div class="form-group">
             <div class="col-xs-12">
-                <label for="youtubeName">Name</label>
+                <label for="headerName">Name</label>
             </div>
         </div>
         <div class="form-group">
             <div class="col-xs-12">
-                <input type="text"
-                       class="form-control"
-                       ng-model="model.widget.name"
-                       id="youtubeName"
-                       placeholder="Name">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <label for="youtubeText">Text</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <input type="text"
-                       class="form-control"
-                       ng-model="model.widget.text"
-                       id="youtubeText"
-                       placeholder="Text">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <label for="youtubeURL">URL</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <input type="text"
-                       class="form-control"
-                       ng-model="model.widget.url"
-                       id="youtubeURL"
-                       placeholder="https://www.youtube.com/user/jannunzi/playlists">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <label for="youtubeSize">Width</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <input type="text"
-                       class="form-control"
-                       ng-model="model.widget.width"
-                       id="youtubeSize"
-                       placeholder="100%">
+                <textarea class="form-control textarea" rows="6" cols="50"
+                          ng-model="model.widget.text"
+                          id="headerName"
+                          placeholder="html text"></textarea>
             </div>
         </div>
     </form>

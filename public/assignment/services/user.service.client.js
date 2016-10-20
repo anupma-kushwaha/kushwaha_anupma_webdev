@@ -22,7 +22,17 @@
         return api;
 
         function createUser(user) {
-            user = {_id: "111", username: user.username, password: user.password};
+            maxId = 000;
+            for (var w in users) {
+                userObj = users[w];
+                if (parseInt(userObj._id) > maxId) {
+                    maxId = parseInt(userObj._id);
+                }
+            }
+            maxId = maxId +1;
+            maxId = maxId.toString();
+
+            user = {_id: maxId, username: user.username, password: user.password};
             users.push(user);
             return user;
         }

@@ -1,92 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../css/style.css" rel="stylesheet"/>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Widgets</title>
-</head>
-<body>
-
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid row">
         <div class="col-xs-2 col-sm-1">
             <div class="navbar-text navbar-left">
-                <a href="../views/page/page-list.html"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                <a href="#/user/{{model.uid}}/website/{{model.wid}}/page"><span
+                        class="glyphicon glyphicon-chevron-left"></span></a>
             </div>
         </div>
         <div class="col-xs-8 col-sm-9">
             <div class="navbar-header">
-                <a class="navbar-brand" href="widget-list.view.client.html">Widgets</a>
+                <a class="navbar-brand" href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget">Widgets</a>
             </div>
         </div>
         <div class="col-xs-2 col-sm-2">
             <div class="navbar-text navbar-right">
-                <a href="widget-chooser.view.client.html"><span class="glyphicon glyphicon-plus"></span></a>
+                <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/new"><span
+                        class="glyphicon glyphicon-plus"></span></a>
             </div>
         </div>
     </div>
 </nav>
 
 <div class="container-fluid">
-    <div class="relative-position">
-        <div class="container-fluid heading2">
-            <a href="http://gizmodo.com/" target="_blank"><label>GIZMODO</label></a>
-        </div>
-        <div class="absolute-position overlay">
-            <a href="widget-heading.view.client.html">
-                <scan class="glyphicon glyphicon-cog glyphicon-blue"></scan>
-                <scan class="glyphicon glyphicon-align-justify glyphicon-blue"></scan>
-            </a>
-        </div>
-    </div>
-    <div class="relative-position">
-        <div class="container-fluid heading2">
-            <a href="http://www.bbc.com/news/technology-37504719" target="_blank"><label>Army of webcams used in net
-                attacks</label></a>
-        </div>
-        <div class="absolute-position overlay">
-            <a href="widget-heading.view.client.html">
-                <scan class="glyphicon glyphicon-cog glyphicon-blue"></scan>
-                <scan class="glyphicon glyphicon-align-justify glyphicon-blue"></scan>
-            </a>
-        </div>
-    </div>
-    <div class="relative-position">
-        <div class="container-fluid">
-            <a target="_blank"
-               href="http://www.nytimes.com/2016/09/28/business/media/at-nearly-84-million-viewers-debate-may-be-the-most-watched-ever.html?ref=politics&_r=0">
-                <img class="image"
-                     src="https://static01.nyt.com/images/2016/09/28/business/28RATINGS/28RATINGS-master768.jpg"></a>
-        </div>
-        <div class="absolute-position overlay">
-            <a href="widget-image.view.client.html"><span class="glyphicon glyphicon-cog glyphicon-blue"></span></a>
-            <a href="widget-image.view.client.html"><span
-                    class="glyphicon glyphicon-align-justify glyphicon-blue"></span></a>
-        </div>
-    </div>
-    <div class="list-group">
-        <div class="relative-position">
-            <div class="container-fluid zero-right-padding">
-                <iframe width="90%" height=auto src="https://www.youtube.com/embed/8tQmGorcdls"
-                        class="embed-responsive-item"></iframe>
+    <ul class="list-group">
+        <li ng-repeat="widget in model.widgets" ng-switch="widget.widgetType" class="list-group-item borderless">
+            <div class="relative-position">
+                <div class="container-fluid heading2">
+                    <div ng-switch-when="YOUTUBE">
+                        <iframe width="100%" height="100%" src="{{model.safeUrl(widget.url)}}"
+                                frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div ng-switch-when="HTML">
+                        <div ng-bind-html="model.safeHtml(widget.text)"></div>
+                    </div>
+                    <div ng-switch-when="IMAGE">
+                        <img src="{{widget.url}}">
+                    </div>
+                    <div ng-switch-when="HEADER">
+                        <div ng-switch="widget.size">
+                            <div ng-switch-when="1"><h1>{{widget.text}}</h1></div>
+                            <div ng-switch-when="2"><h2>{{widget.text}}</h2></div>
+                            <div ng-switch-when="3"><h3>{{widget.text}}</h3></div>
+                            <div ng-switch-when="4"><h4>{{widget.text}}</h4></div>
+                            <div ng-switch-when="5"><h5>{{widget.text}}</h5></div>
+                            <div ng-switch-when="6"><h6>{{widget.text}}</h6></div>
+                        </div>
+                    </div>
+                    <div class="absolute-position overlay">
+                        <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{widget._id}}">
+                            <scan class="glyphicon glyphicon-cog glyphicon-blue"></scan>
+                        </a>
+                        <scan class="glyphicon glyphicon-align-justify glyphicon-blue"></scan>
+                    </div>
+                </div>
             </div>
-            <div class="absolute-position overlay">
-                <a href="widget-youtube.view.client.html"><span class="glyphicon glyphicon-cog glyphicon-blue"></span></a>
-                <a href="widget-youtube.view.client.html"><span class="glyphicon glyphicon-align-justify glyphicon-blue"></span></a>
-            </div>
-        </div>
-    </div>
+        </li>
+    </ul>
 </div>
-
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12">
                 <div class="navbar-text pull-right">
-                    <a href="../views/user/profile.html">
+                    <a href="#/user/{{model.uid}}">
                         <span class="glyphicon glyphicon-user"></span>
                     </a>
                 </div>
@@ -94,5 +70,3 @@
         </div>
     </div>
 </nav>
-</body>
-</html>

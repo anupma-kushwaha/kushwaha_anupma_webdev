@@ -24,7 +24,17 @@
         return api;
 
         function createWebsite(userId, website) {
-            website = {_id: "222", name: website.name, description: website.description, developerId: userId};
+            maxId = 000;
+            for (var w in websites) {
+                websiteObj = websites[w];
+                if (parseInt(websiteObj._id) > maxId) {
+                    maxId = parseInt(websiteObj._id);
+                }
+            }
+            maxId = maxId +1;
+            maxId = maxId.toString();
+
+            website = {_id: maxId, name: website.name, description: website.description, developerId: userId};
             websites.push(website);
             return website;
         }

@@ -20,20 +20,30 @@
         return api;
 
         function createPage(websiteId, page) {
-            page = {_id: "333", name: page.name, title: page.title, websiteId: websiteId};
+            maxId = 000;
+            for (var w in pages) {
+                pageObj = pages[w];
+                if (parseInt(pageObj._id) > maxId) {
+                    maxId = parseInt(pageObj._id);
+                }
+            }
+            maxId = maxId +1;
+            maxId = maxId.toString();
+
+            page = {_id: maxId, name: page.name, title: page.title, websiteId: websiteId};
             pages.push(page);
             return page;
         }
 
         function findPageByWebsiteId(websiteId) {
-            pagessForWebsite = [];
+            pagesForWebsite = [];
             for (var w in pages) {
                 page = pages[w];
                 if (page.websiteId === websiteId) {
-                    pagessForWebsite.push(page)
+                    pagesForWebsite.push(page)
                 }
             }
-            return pagessForWebsite;
+            return pagesForWebsite;
         }
 
         function findPageById(pageId) {

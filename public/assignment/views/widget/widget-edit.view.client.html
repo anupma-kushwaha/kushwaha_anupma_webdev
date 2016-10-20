@@ -2,17 +2,18 @@
     <div class="container-fluid row">
         <div class="col-xs-2 col-sm-1">
             <div class="navbar-text navbar-left">
-                <a href="#/user/{{model.uid}}/website"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                <a href="#/user/{{model.uid}}/website/{{model.wid}}/page"><span
+                        class="glyphicon glyphicon-chevron-left"></span></a>
             </div>
         </div>
         <div class="col-xs-8 col-sm-9">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#/user/{{model.uid}}/website/{{model.wid}}/page">Pages</a>
+                <a class="navbar-brand" href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget">Widgets</a>
             </div>
         </div>
         <div class="col-xs-2 col-sm-2">
             <div class="navbar-text navbar-right">
-                <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/new"><span
+                <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/new"><span
                         class="glyphicon glyphicon-plus"></span></a>
             </div>
         </div>
@@ -20,20 +21,20 @@
 </nav>
 
 <div class="container-fluid">
-    <ul class="list-group">
-        <li ng-repeat="page in model.pages" class="list-group-item borderless">
-            <div class="row">
-                <div class="col-xs-10 col-xs-offset-left-10">
-                    <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{page._id}}/widget"><label>{{page.name}}</label></a>
-                </div>
-                <div class="col-xs-2 col-xs-offset-left-10">
-                    <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{page._id}}">
-                        <scan class="glyphicon glyphicon-cog glyphicon-blue"></scan>
-                    </a>
-                </div>
-            </div>
-        </li>
-    </ul>
+    <div ng-switch="model.widget.widgetType">
+        <div ng-switch-when="HTML">
+            <div ng-include="'views/widget/widget-html.view.client.html'"></div>
+        </div>
+        <div ng-switch-when="HEADER">
+            <div ng-include="'views/widget/widget-header.view.client.html'"></div>
+        </div>
+        <div ng-switch-when="IMAGE">
+            <div ng-include="'views/widget/widget-image.view.client.html'"></div>
+        </div>
+        <div ng-switch-when="YOUTUBE">
+            <div ng-include="'views/widget/widget-youtube.view.client.html'"></div>
+        </div>
+    </div>
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
