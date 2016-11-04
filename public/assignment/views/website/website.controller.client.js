@@ -6,13 +6,19 @@
         .controller("EditWebsiteController", EditWebsiteController);
 
     function WebsiteListController($routeParams, WebsiteService) {
-
         var vm = this;
         var uid = ($routeParams.uid);
 
         function init() {
             vm.uid = uid;
-            vm.websites = WebsiteService.findWebsitesByUser(uid);
+            WebsiteService
+                .findWebsitesByUser(uid)
+                .success(function (websites) {
+                    vm.websites = websites;
+                })
+                .error(function (error) {
+                    vm.error = "No websites found!";
+                });
         }
         init();
     }
@@ -20,21 +26,32 @@
     function NewWebsiteController($routeParams, $location, WebsiteService) {
         var vm = this;
         vm.createWebsite = createWebsite;
-
         var uid = ($routeParams.uid);
         var wid = ($routeParams.wid);
         vm.uid = uid;
         vm.wid = wid;
-
         function init() {
-            vm.websites = WebsiteService.findWebsitesByUser(uid);
+            WebsiteService
+                .findWebsitesByUser(uid)
+                .success(function (websites) {
+                    vm.websites = websites;
+                })
+                .error(function (error) {
+                    vm.error = "No websites found!";
+                });
         }
         init();
 
         function createWebsite(websiteName, websiteDesc) {
             var website = {name: websiteName, description: websiteDesc};
-            var website = WebsiteService.createWebsite(uid, website);
-            $location.url("/user/" + uid + "/website");
+            WebsiteService
+                .createWebsite(uid, website)
+                .success(function (website) {
+                    $location.url("/user/" + uid + "/website");
+                })
+                .error(function (error) {
+                    vm.error = "No websites found!";
+                });
         }
     }
 
@@ -42,26 +59,53 @@
         var vm = this;
         vm.deleteWebsite = deleteWebsite;
         vm.updateWebsite = updateWebsite;
-
         var uid = ($routeParams.uid);
         var wid = ($routeParams.wid);
         vm.uid = uid;
         vm.wid = wid;
-
         function init() {
-            vm.websites = WebsiteService.findWebsitesByUser(uid);
-            vm.website = WebsiteService.findWebsiteById(wid);
+            WebsiteService
+                .findWebsitesByUser(uid)
+                .success(function (websites) {
+                    vm.websites = websites;
+                })
+                .error(function () {
+                    vm.error = "No websites found!";
+                });
+
+            WebsiteService
+                .findWebsiteById(wid)
+                .success(function (website) {
+                    vm.website = website;
+                })
+                .error(function () {
+                    vm.error = "No website found!";
+                });
         }
+
         init();
 
         function updateWebsite(website) {
-            WebsiteService.updateWebsite(vm.wid, website);
-            $location.url("/user/" + uid + "/website");
+            WebsiteService
+                .updateWebsite(vm.wid, website)
+                .success(function (website) {
+                    $location.url("/user/" + uid + "/website");
+                })
+                .error(function () {
+                    vm.error = "No website found!";
+                });
         }
 
         function deleteWebsite() {
-            WebsiteService.deleteWebsite(vm.wid);
-            $location.url("/user/" + uid + "/website");
+            WebsiteService
+                .deleteWebsite(vm.wid)
+                .success(function (website) {
+                    $location.url("/user/" + uid + "/website");
+                })
+                .error(function () {
+                    vm.error = "No website found!";
+                });
         }
     }
+
 })();

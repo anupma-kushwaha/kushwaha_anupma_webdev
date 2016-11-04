@@ -11,13 +11,19 @@
         vm.login = login;
 
         function login(username, password) {
-            var user = UserService.findUserByCredentials(username, password);
-            if (user === null) {
-                vm.error = "No such user";
-            }
-            else {
-                $location.url("/user/" + user._id);
-            }
+            UserService
+                .findUserByCredentials(username, password)
+                .success(function(user){
+                    if (user === '0') {
+                        vm.error = "No such user";
+                    }
+                    else {
+                        $location.url("/user/" + user._id);
+                    }
+                })
+                .error(function (){
+                    vm.error = "No such user";
+                });
         }
     }
 
@@ -34,8 +40,14 @@
             }
             else {
                 var userJson = {username: username, password: password};
-                var user = UserService.createUser(userJson);
-                $location.url("/user/" + user._id);
+                UserService
+                    .createUser(userJson)
+                    .success(function (user){
+                        $location.url("/user/" + user._id);
+                    })
+                    .error(function(error){
+                        vm.error = "Cannot create a user";
+                    });
             }
         }
     }
@@ -48,19 +60,36 @@
         var userId = ($routeParams.uid);
 
         function init() {
-            vm.user = UserService.findUserById(userId);
+            UserService
+                .findUserById(userId)
+                .success(function (user){
+                    if(user!='0'){
+                        vm.user = user;
+                    }
+                })
+                .error(function (){
+                    vm.error = "No such user";
+                });
         }
         init();
 
         function updateProfile() {
             user = vm.user;
             var userId = ($routeParams.uid);
-            var user = UserService.updateUser(userId, user);
+            UserService
+                .updateUser(userId, user)
+                .success(function (user){
+                    vm.user = user;
+                })
+                .error(function (){
+                    vm.error = "No such user";
+                });
         }
-        
+
         function getWebsites() {
             var userId = ($routeParams.uid);
-            $location.url("/user/" + user._id + "/website");
+            $location.url("/user/" + userId + "/website");
         }
     }
+
 })();

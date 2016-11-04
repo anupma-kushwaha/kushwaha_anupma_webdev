@@ -10,17 +10,21 @@
         var uid = ($routeParams.uid);
         var wid = ($routeParams.wid);
         var pid = ($routeParams.pid);
-
         vm.uid = uid;
         vm.wid = wid;
         vm.pid = pid;
         vm.safeHtml = safeHtml;
         vm.safeUrl = safeUrl;
-
         function init() {
-            vm.widgets = WidgetService.findWidgetsByPageId(pid);
+            WidgetService
+                .findAllWidgetsForPage(pid)
+                .success(function (widgets) {
+                    vm.widgets = widgets;
+                })
+                .error(function (error) {
+                    vm.error = "No widget found!";
+                });
         }
-
         init();
 
         function safeHtml(html) {
@@ -33,34 +37,44 @@
             console.log(url);
             return $sce.trustAsResourceUrl(url);
         }
-
     }
 
     function NewWidgetController($routeParams, $location, WidgetService) {
         var vm = this;
         vm.createWidget = createWidget;
-
         var uid = ($routeParams.uid);
         var wid = ($routeParams.wid);
         var pid = ($routeParams.pid);
         vm.uid = uid;
         vm.wid = wid;
         vm.pid = pid;
-
         function init() {
-            vm.widgets = WidgetService.findWidgetsByPageId(pid);
-            vm.widget = {};
+            WidgetService
+                .findAllWidgetsForPage(pid)
+                .success(function (widgets) {
+                    vm.widgets = widgets;
+                    vm.widget = {};
+                })
+                .error(function (error) {
+                    vm.error = "No widget found!";
+                });
         }
-
         init();
 
-        function createWidget(widgetType){
-            var widget = {widgetType: widgetType, pageId : pid};
-            var widgetObj = WidgetService.createWidget(pid, widget);
-            wgid = widgetObj._id;
-            vm.wgid = wgid;
-            vm.widget = widgetObj;
-            $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget/" + wgid);
+        function createWidget(widgetType) {
+            var widget = {widgetType: widgetType, pageId: pid};
+            WidgetService
+                .createWidget(pid, widget)
+                .success(function (widget) {
+                    var widgetObj = widget;
+                    wgid = widgetObj._id;
+                    vm.wgid = wgid;
+                    vm.widget = widgetObj;
+                    $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget/" + wgid);
+                })
+                .error(function (error) {
+                    vm.error = "No widget found!";
+                });
         }
     }
 
@@ -68,7 +82,6 @@
         var vm = this;
         vm.deleteWidget = deleteWidget;
         vm.updateWidget = updateWidget;
-
         var uid = ($routeParams.uid);
         var wid = ($routeParams.wid);
         var pid = ($routeParams.pid);
@@ -79,19 +92,37 @@
         vm.wgid = wgid;
 
         function init() {
-            vm.widget = WidgetService.findWidgetById(wgid);
+            WidgetService
+                .findWidgetById(wgid)
+                .success(function (widget) {
+                    vm.widget = widget;
+                })
+                .error(function (error) {
+                    vm.error = "No widget found!";
+                });
         }
-
         init();
 
         function updateWidget(widget) {
-            WidgetService.updateWidget(vm.wgid, widget);
-            $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget");
+            WidgetService
+                .updateWidget(vm.wgid, widget)
+                .success(function (widget) {
+                    $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget");
+                })
+                .error(function (error) {
+                    vm.error = "No widget found!";
+                });
         }
 
         function deleteWidget() {
-            WidgetService.deleteWidget(vm.wgid);
-            $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget");
+            WidgetService
+                .deleteWidget(vm.wgid)
+                .success(function (widget) {
+                    $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget");
+                })
+                .error(function (error) {
+                    vm.error = "No widget found!";
+                });
         }
     }
 })();
