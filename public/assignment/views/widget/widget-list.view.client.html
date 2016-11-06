@@ -20,8 +20,13 @@
     </div>
 </nav>
 
+<jga-sortable data="model.widgets"
+              callback="model.reorderWidget(start, end)"
+              model="model">
+</jga-sortable>
+
 <div class="container-fluid">
-    <ul class="list-group">
+    <ul class="list-group jga-sortable" id="widgetList">
         <li ng-repeat="widget in model.widgets" ng-switch="widget.widgetType" class="list-group-item borderless">
             <div class="relative-position">
                 <div class="container-fluid heading2">
