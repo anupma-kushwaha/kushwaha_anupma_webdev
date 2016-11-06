@@ -33,7 +33,7 @@
                         <div ng-bind-html="model.safeHtml(widget.text)"></div>
                     </div>
                     <div ng-switch-when="IMAGE">
-                        <img src="{{widget.url}}">
+                        <img width="{{widget.width}}" ng-src="{{model.checkSafeImage(widget.url)}}">
                     </div>
                     <div ng-switch-when="HEADER">
                         <div ng-switch="widget.size">

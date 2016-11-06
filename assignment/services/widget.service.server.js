@@ -1,5 +1,17 @@
 module.exports = function (app) {
 
+    var mime = require('mime');   // npm install mime --save
+    var multer = require('multer'); // npm install multer --save
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, __dirname+'/../../public/assignment/uploads')
+        },
+        filename: function (req, file, cb) {
+            cb(null, file.fieldname + '-' + Date.now() + '.' + mime.extension(file.mimetype));
+        }
+    });
+    var upload = multer({ storage: storage });
+
     var widgets = [
         {_id: "123", widgetType: "HEADER", pageId: "321", size: 2, text: "GIZMODO"},
         {_id: "234", widgetType: "HEADER", pageId: "321", size: 4, text: "Lorem ipsum"},
@@ -21,6 +33,7 @@ module.exports = function (app) {
     app.get('/api/widget/:widgetId', findWidgetById);
     app.put('/api/widget/:widgetId', updateWidget);
     app.delete('/api/widget/:widgetId', deleteWidget);
+    app.post ("/api/upload", upload.single('myFile'), uploadImage);
 
     function createWidget(req, res) {
         var pageId = req.params.pageId;
@@ -34,7 +47,7 @@ module.exports = function (app) {
 
     function findAllWidgetsForPage(req, res) {
         var pageId = req.params.pageId;
-        widgetsForPage = [];
+        var widgetsForPage = [];
         for (var w in widgets) {
             widget = widgets[w];
             if (widget.pageId === pageId) {
@@ -47,7 +60,7 @@ module.exports = function (app) {
     function findWidgetById(req, res) {
         var widgetId = req.params.widgetId;
         for (var u in widgets) {
-            widget = widgets[u];
+            var widget = widgets[u];
             if (widget._id === widgetId) {
                 res.send(widget);
                 return;
@@ -60,7 +73,7 @@ module.exports = function (app) {
         var widgetId = req.params.widgetId;
         var widget = req.body;
         for (var i = 0; i < widgets.length; i++) {
-            widgetsObj = widgets[i];
+            var widgetsObj = widgets[i];
             if (widgetsObj._id == widgetId) {
                 widgetsObj.widgetType = widget.widgetType;
                 widgetsObj.pageId = widget.pageId;
@@ -78,10 +91,35 @@ module.exports = function (app) {
     function deleteWidget(req, res) {
         var widgetId = req.params.widgetId;
         for (var w in widgets) {
-            widget = widgets[w];
+            var widget = widgets[w];
             if (widget._id === widgetId) {
                 delete widgets[w];
-                res.send(websites[w]);
+                res.send(widgets[w]);
+                return;
+            }
+        }
+        res.send('0');
+    }
+
+    function uploadImage(req, res) {
+        var widgetId      = req.body.widgetId;
+        var userId        = req.body.userId;
+        var websiteId     = req.body.websiteId;
+        var pageId        = req.body.pageId;
+        var myFile = req.file;
+        var width = req.body.width;
+        var name = req.body.name;
+        var description = req.body.description;
+        var filename = myFile.filename;     // new file name in upload folder
+        for (var w in widgets) {
+            var widget = widgets[w];
+            if (widget._id === widgetId) {
+                widget.url = '/assignment/uploads/' + filename;
+                widget.width = width;
+                widget.name = name;
+                widget.description = description;
+                var url = "/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId;
+                res.redirect(url);
                 return;
             }
         }

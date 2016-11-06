@@ -15,11 +15,14 @@
         vm.pid = pid;
         vm.safeHtml = safeHtml;
         vm.safeUrl = safeUrl;
+        vm.checkSafeImage=checkSafeImage;
+
         function init() {
             WidgetService
                 .findAllWidgetsForPage(pid)
                 .success(function (widgets) {
                     vm.widgets = widgets;
+                    console.log(widgets);
                 })
                 .error(function (error) {
                     vm.error = "No widget found!";
@@ -35,6 +38,10 @@
             urlStrings = url.split("/");
             url = "https://www.youtube.com/embed/" + urlStrings[urlStrings.length - 1];
             console.log(url);
+            return $sce.trustAsResourceUrl(url);
+        }
+
+        function checkSafeImage(url) {
             return $sce.trustAsResourceUrl(url);
         }
     }
@@ -82,6 +89,7 @@
         var vm = this;
         vm.deleteWidget = deleteWidget;
         vm.updateWidget = updateWidget;
+
         var uid = ($routeParams.uid);
         var wid = ($routeParams.wid);
         var pid = ($routeParams.pid);

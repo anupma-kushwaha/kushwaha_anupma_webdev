@@ -8,13 +8,13 @@
         </div>
         <div class="col-xs-8 col-sm-9">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget">Edit Image Widget</a>
+                <a class="navbar-brand" href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget">Edit
+                    Image Widget</a>
             </div>
         </div>
         <div class="col-xs-2 col-sm-2">
             <div class="navbar-text navbar-right">
-                <a ng-click="model.updateWidget(model.widget)"><span
-                        class="glyphicon glyphicon-ok"></span></a>
+                <a ng-click="model.updateWidget(model.widget)"><span class="glyphicon glyphicon-ok"></span></a>
             </div>
         </div>
     </div>
@@ -24,74 +24,48 @@
     <form>
         <div class="form-group">
             <div class="col-xs-12">
-                <label for="imageName">Name</label>
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Name" ng-model="model.widget.name">
             </div>
         </div>
         <div class="form-group">
             <div class="col-xs-12">
-                <input type="text"
-                       class="form-control"
-                       ng-model="model.widget.name"
-                       id="imageName"
-                       placeholder="Name">
+                <label for="text">Text</label>
+                <input type="text" class="form-control" id="text" placeholder="Your Text Here"
+                       ng-model="model.widget.description"></div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <label for="url">URL</label>
+                <input type="url" class="form-control" id="url" placeholder="http://imgblur.com/amar"
+                       ng-model="model.widget.url">
             </div>
         </div>
         <div class="form-group">
             <div class="col-xs-12">
-                <label for="imageText">Text</label>
+                <label for="width">Width</label>
+                <input type="text" class="form-control" id="width" placeholder="Width in %"
+                       ng-model="model.widget.width">
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <input type="text"
-                       class="form-control"
-                       ng-model="model.widget.text"
-                       id="imageText"
-                       placeholder="Text">
-            </div>
+    </form>
+
+    <div class="form-group">
+        <div class="col-xs-12">
+            <form id="image" action="/api/upload" method="post" enctype="multipart/form-data">
+                <label>Upload</label>
+                <input name="myFile" type="file" class="form-control"/>
+                <input name="name" value="{{model.widget.name}}" style="display: none"/>
+                <input name="description" value="{{model.widget.description}}" style="display: none"/>
+                <input name="width" value="{{model.widget.width}}" style="display: none"/>
+                <input name="widgetId" value="{{model.wgid}}" style="display: none"/>
+                <input name="userId" value="{{model.uid}}" style="display: none"/>
+                <input name="pageId" value="{{model.pid}}" style="display: none"/>
+                <input name="websiteId" value="{{model.wid}}" style="display: none"/>
+                <button type="submit" class="btn btn-block btn-primary">Upload Image</button>
+            </form>
         </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <label for="imageURL">URL</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <input type="text"
-                       class="form-control"
-                       ng-model="model.widget.url"
-                       id="imageURL"
-                       placeholder="http://www.wallpaper.com/1232344">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <label for="imageSize">Width</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <input type="text"
-                       class="form-control"
-                       ng-model="model.widget.width"
-                       id="imageSize"
-                       placeholder="100%">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <label for="imageUpload">Upload</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <input type="file"
-                       class="form-control"
-                       ng-model="model.widget.upload"
-                       id="imageUpload"
-                       placeholder="No file choosen">
-            </div>
-        </div>
+    </div>
     </form>
     <div class="form-group">
         <div class="col-xs-12">
@@ -113,4 +87,3 @@
         </div>
     </div>
 </nav>
-
