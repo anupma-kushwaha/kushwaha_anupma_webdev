@@ -15,18 +15,21 @@
         vm.pid = pid;
         vm.safeHtml = safeHtml;
         vm.safeUrl = safeUrl;
-        vm.checkSafeImage=checkSafeImage;
+        vm.checkSafeImage = checkSafeImage;
+        vm.sortWidget = sortWidget;
 
         function init() {
             WidgetService
                 .findAllWidgetsForPage(pid)
                 .success(function (widgets) {
                     vm.widgets = widgets;
+                    $(".jga-sortable").sortable();
                 })
                 .error(function (error) {
                     vm.error = "No widget found!";
                 });
         }
+
         init();
 
         function safeHtml(html) {
@@ -42,6 +45,19 @@
 
         function checkSafeImage(url) {
             return $sce.trustAsResourceUrl(url);
+        }
+
+        function sortWidget(index1, index2) {
+            WidgetService
+                .sortWidget(vm.pid, index1, index2)
+                .then(
+                    function (success) {
+                        init();
+                    },
+                    function (error) {
+                        vm.error = "Not able to reorder the widgets";
+                    }
+                )
         }
     }
 
@@ -65,6 +81,7 @@
                     vm.error = "No widget found!";
                 });
         }
+
         init();
 
         function createWidget(widgetType) {
@@ -108,6 +125,7 @@
                     vm.error = "No widget found!";
                 });
         }
+
         init();
 
         function updateWidget(widget) {

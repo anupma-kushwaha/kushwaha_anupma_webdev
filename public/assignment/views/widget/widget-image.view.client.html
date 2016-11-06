@@ -54,7 +54,7 @@
         <div class="col-xs-12">
             <form id="image" action="/api/upload" method="post" enctype="multipart/form-data">
                 <label>Upload</label>
-                <input name="myFile" type="file" class="form-control"/>
+                <input name="myFile" type="file" required class="form-control"/>
                 <input name="name" value="{{model.widget.name}}" style="display: none"/>
                 <input name="description" value="{{model.widget.description}}" style="display: none"/>
                 <input name="width" value="{{model.widget.width}}" style="display: none"/>

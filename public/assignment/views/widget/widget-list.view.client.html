@@ -21,46 +21,9 @@
 </nav>
 
 <jga-sortable data="model.widgets"
-              callback="model.reorderWidget(start, end)"
+              callback="model.sortWidget(start, end)"
               model="model">
 </jga-sortable>
-
-<div class="container-fluid">
-    <ul class="list-group jga-sortable" id="widgetList">
-        <li ng-repeat="widget in model.widgets" ng-switch="widget.widgetType" class="list-group-item borderless">
-            <div class="relative-position">
-                <div class="container-fluid heading2">
-                    <div ng-switch-when="YOUTUBE">
-                        <iframe width="100%" height="100%" src="{{model.safeUrl(widget.url)}}"
-                                frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <div ng-switch-when="HTML">
-                        <div ng-bind-html="model.safeHtml(widget.text)"></div>
-                    </div>
-                    <div ng-switch-when="IMAGE">
-                        <img width="{{widget.width}}" ng-src="{{model.checkSafeImage(widget.url)}}">
-                    </div>
-                    <div ng-switch-when="HEADER">
-                        <div ng-switch="widget.size">
-                            <div ng-switch-when="1"><h1>{{widget.text}}</h1></div>
-                            <div ng-switch-when="2"><h2>{{widget.text}}</h2></div>
-                            <div ng-switch-when="3"><h3>{{widget.text}}</h3></div>
-                            <div ng-switch-when="4"><h4>{{widget.text}}</h4></div>
-                            <div ng-switch-when="5"><h5>{{widget.text}}</h5></div>
-                            <div ng-switch-when="6"><h6>{{widget.text}}</h6></div>
-                        </div>
-                    </div>
-                    <div class="absolute-position overlay">
-                        <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{widget._id}}">
-                            <scan class="glyphicon glyphicon-cog glyphicon-blue"></scan>
-                        </a>
-                        <scan class="glyphicon glyphicon-align-justify glyphicon-blue"></scan>
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">

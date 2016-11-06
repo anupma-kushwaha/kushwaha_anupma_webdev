@@ -40,7 +40,7 @@ module.exports = function(app) {
                     return;
                 }
             }
-            res.send('0');
+            res.sendStatus(400);
         }
 
         function findUserByUsername(req, res) {
@@ -52,7 +52,7 @@ module.exports = function(app) {
                     return;
                 }
             }
-            res.send('0');
+            res.sendStatus(400);
         }
     }
 
@@ -65,7 +65,7 @@ module.exports = function(app) {
                 return;
             }
         }
-        res.send('0');
+        res.sendStatus(400);
     }
 
     function updateUser(req, res) {
@@ -85,7 +85,7 @@ module.exports = function(app) {
             res.send(userObj);
             return;        }
         else{
-            res.send('0');
+            res.sendStatus(400);
         }
     }
 
@@ -99,7 +99,7 @@ module.exports = function(app) {
                 return;
             }
         }
-        res.send('0');
+        res.sendStatus(400);
     }
 
 }

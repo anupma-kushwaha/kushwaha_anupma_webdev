@@ -43,7 +43,7 @@ module.exports = function(app) {
                 return;
             }
         }
-        res.send('0');
+        res.sendStatus(400);
     }
 
     function updatePage(req, res) {
@@ -58,7 +58,7 @@ module.exports = function(app) {
                 return
             }
         }
-        res.send('0');
+        res.sendStatus(400);
     }
 
     function deletePage(req, res) {
@@ -71,6 +71,6 @@ module.exports = function(app) {
                 return
             }
         }
-        res.send('0');
+        res.sendStatus(400);
     }
 };

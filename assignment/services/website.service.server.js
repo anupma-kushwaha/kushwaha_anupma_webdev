@@ -46,7 +46,7 @@ module.exports = function(app) {
                 return;
             }
         }
-        res.send('0');
+        res.sendStatus(400);
     }
 
     function updateWebsite(req, res) {
@@ -61,7 +61,7 @@ module.exports = function(app) {
                 return
             }
         }
-        res.send('0');
+        res.sendStatus(400);
     }
 
     function deleteWebsite(req, res) {
@@ -74,6 +74,6 @@ module.exports = function(app) {
                 return
             }
         }
-        res.send('0');
+        res.sendStatus(400);
     }
 }

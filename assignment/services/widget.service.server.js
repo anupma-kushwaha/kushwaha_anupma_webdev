@@ -4,13 +4,13 @@ module.exports = function (app) {
     var multer = require('multer'); // npm install multer --save
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
-            cb(null, __dirname+'/../../public/assignment/uploads')
+            cb(null, __dirname + '/../../public/assignment/uploads')
         },
         filename: function (req, file, cb) {
             cb(null, file.fieldname + '-' + Date.now() + '.' + mime.extension(file.mimetype));
         }
     });
-    var upload = multer({ storage: storage });
+    var upload = multer({storage: storage});
 
     var widgets = [
         {_id: "123", widgetType: "HEADER", pageId: "321", size: 2, text: "GIZMODO"},
@@ -33,7 +33,8 @@ module.exports = function (app) {
     app.get('/api/widget/:widgetId', findWidgetById);
     app.put('/api/widget/:widgetId', updateWidget);
     app.delete('/api/widget/:widgetId', deleteWidget);
-    app.post ("/api/upload", upload.single('myFile'), uploadImage);
+    app.post("/api/upload", upload.single('myFile'), uploadImage);
+    app.put("/page/:pageId/widget", sortWidget);
 
     function createWidget(req, res) {
         var pageId = req.params.pageId;
@@ -66,7 +67,7 @@ module.exports = function (app) {
                 return;
             }
         }
-        res.send('0');
+        res.sendStatus(400);
     }
 
     function updateWidget(req, res) {
@@ -85,7 +86,7 @@ module.exports = function (app) {
                 return
             }
         }
-        res.send('0');
+        res.sendStatus(400);
     }
 
     function deleteWidget(req, res) {
@@ -98,14 +99,14 @@ module.exports = function (app) {
                 return;
             }
         }
-        res.send('0');
+        res.sendStatus(400);
     }
 
     function uploadImage(req, res) {
-        var widgetId      = req.body.widgetId;
-        var userId        = req.body.userId;
-        var websiteId     = req.body.websiteId;
-        var pageId        = req.body.pageId;
+        var widgetId = req.body.widgetId;
+        var userId = req.body.userId;
+        var websiteId = req.body.websiteId;
+        var pageId = req.body.pageId;
         var myFile = req.file;
         var width = req.body.width;
         var name = req.body.name;
@@ -123,7 +124,14 @@ module.exports = function (app) {
                 return;
             }
         }
-        res.send('0');
+        res.sendStatus(400);
     }
 
+    function sortWidget(req, res) {
+        var pageId = req.params.pageId;
+        var start = parseInt(req.query.start);
+        var end = parseInt(req.query.end);
+        widgets.splice(end, 0, widgets.splice(start,1)[0]);
+        res.sendStatus(200);
+    }
 };
