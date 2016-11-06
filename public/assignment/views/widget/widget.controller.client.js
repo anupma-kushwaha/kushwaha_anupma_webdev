@@ -22,7 +22,6 @@
                 .findAllWidgetsForPage(pid)
                 .success(function (widgets) {
                     vm.widgets = widgets;
-                    console.log(widgets);
                 })
                 .error(function (error) {
                     vm.error = "No widget found!";
