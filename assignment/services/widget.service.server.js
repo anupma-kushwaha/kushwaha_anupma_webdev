@@ -131,7 +131,21 @@ module.exports = function (app) {
         var pageId = req.params.pageId;
         var start = parseInt(req.query.start);
         var end = parseInt(req.query.end);
-        widgets.splice(end, 0, widgets.splice(start,1)[0]);
+        var index = 0, startIndex = 0, endIndex = 0;
+        for (var w in widgets) {
+            var widget = widgets[w];
+            var pid = widget.pageId;
+            if (pid === pageId) {
+                index++;
+            }
+            if (index == start) {
+                startIndex = index;
+            }
+            if (index == end) {
+                endIndex = index;
+            }
+        }
+        widgets.splice(endIndex, 0, widgets.splice(startIndex, 1)[0]);
         res.sendStatus(200);
     }
 };
