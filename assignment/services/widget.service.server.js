@@ -128,9 +128,6 @@ module.exports = function (app) {
     }
 
     function sortWidget(req, res) {
-
-        console.log(JSON.stringify(widgets));
-
         var pageId = req.params.pageId;
         var start = parseInt(req.query.start);
         var end = parseInt(req.query.end);
@@ -139,17 +136,16 @@ module.exports = function (app) {
             var widget = widgets[w];
             var pid = widget.pageId;
             if (pid === pageId) {
+                if (index == start) {
+                    startIndex = w;
+                }
+                if (index == end) {
+                    endIndex = w;
+                }
                 index++;
-            }
-            if (index == start) {
-                startIndex = index;
-            }
-            if (index == end) {
-                endIndex = index;
             }
         }
         widgets.splice(endIndex, 0, widgets.splice(startIndex, 1)[0]);
-        console.log(JSON.stringify(widgets));
         res.sendStatus(200);
     }
 };
