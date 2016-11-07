@@ -43,7 +43,7 @@ module.exports = function (app) {
         widget._id = id;
         widget.pageId = pageId;
         widgets.push(widget);
-        res.send(widget);
+        res.json(widget);
     }
 
     function findAllWidgetsForPage(req, res) {
@@ -55,7 +55,7 @@ module.exports = function (app) {
                 widgetsForPage.push(widget)
             }
         }
-        res.send(widgetsForPage);
+        res.json(widgetsForPage);
     }
 
     function findWidgetById(req, res) {
@@ -75,14 +75,14 @@ module.exports = function (app) {
         var widget = req.body;
         for (var i = 0; i < widgets.length; i++) {
             var widgetsObj = widgets[i];
-            if (widgetsObj._id == widgetId) {
+            if (widgetsObj._id === widgetId) {
                 widgetsObj.widgetType = widget.widgetType;
                 widgetsObj.pageId = widget.pageId;
                 widgetsObj.size = widget.size;
                 widgetsObj.text = widget.text;
                 widgetsObj.url = widget.url;
                 widgetsObj.width = widget.width;
-                res.send(widgetsObj);
+                res.json(widgetsObj);
                 return
             }
         }
@@ -95,7 +95,7 @@ module.exports = function (app) {
             var widget = widgets[w];
             if (widget._id === widgetId) {
                 delete widgets[w];
-                res.send(widgets[w]);
+                res.json(widgets[w]);
                 return;
             }
         }
@@ -128,6 +128,9 @@ module.exports = function (app) {
     }
 
     function sortWidget(req, res) {
+
+        console.log(JSON.stringify(widgets));
+
         var pageId = req.params.pageId;
         var start = parseInt(req.query.start);
         var end = parseInt(req.query.end);
@@ -146,6 +149,7 @@ module.exports = function (app) {
             }
         }
         widgets.splice(endIndex, 0, widgets.splice(startIndex, 1)[0]);
+        console.log(JSON.stringify(widgets));
         res.sendStatus(200);
     }
 };

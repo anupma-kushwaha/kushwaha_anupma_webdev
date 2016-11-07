@@ -14,7 +14,7 @@
         vm.wid = wid;
         vm.pid = pid;
         vm.safeHtml = safeHtml;
-        vm.safeUrl = safeUrl;
+        vm.safeYoutubeUrl = safeYoutubeUrl;
         vm.checkSafeImage = checkSafeImage;
         vm.sortWidget = sortWidget;
 
@@ -23,7 +23,6 @@
                 .findAllWidgetsForPage(pid)
                 .success(function (widgets) {
                     vm.widgets = widgets;
-                    $(".jga-sortable").sortable();
                 })
                 .error(function (error) {
                     vm.error = "No widget found!";
@@ -36,10 +35,9 @@
             return $sce.trustAsHtml(html);
         }
 
-        function safeUrl(url) {
-            urlStrings = url.split("/");
+        function safeYoutubeUrl(url) {
+            var urlStrings = url.split("/");
             url = "https://www.youtube.com/embed/" + urlStrings[urlStrings.length - 1];
-            console.log(url);
             return $sce.trustAsResourceUrl(url);
         }
 
@@ -75,7 +73,6 @@
                 .findAllWidgetsForPage(pid)
                 .success(function (widgets) {
                     vm.widgets = widgets;
-                    vm.widget = {};
                 })
                 .error(function (error) {
                     vm.error = "No widget found!";
@@ -132,7 +129,8 @@
             WidgetService
                 .updateWidget(vm.wgid, widget)
                 .success(function (widget) {
-                    $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget");
+                    var url = "/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget";
+                    $location.url(url);
                 })
                 .error(function (error) {
                     vm.error = "No widget found!";
