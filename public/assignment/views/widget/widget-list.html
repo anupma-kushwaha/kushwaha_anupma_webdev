@@ -4,7 +4,7 @@
             <div class="relative-position">
                 <div class="container-fluid heading2">
                     <div ng-switch-when="YOUTUBE" class="youtube-widget">
-                        <iframe width="100%" height="100%" ng-src="{{model.safeYoutubeUrl(widget.url)}}"
+                        <iframe width="{{widget.width}}" ng-src="{{model.safeYoutubeUrl(widget.url)}}"
                                 frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div ng-switch-when="HTML">

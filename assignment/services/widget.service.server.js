@@ -23,19 +23,30 @@ module.exports = function (app, model) {
     function createWidget(req, res) {
         var pageId = req.params.pageId;
         var widget = req.body;
-        console.log(req.body);
-        model
-            .widgetModel
-            .createWidget(pageId, widget)
-            .then(
-                function (widObj) {
-                    console.log(JSON.stringify(widObj));
-                    res.send(widObj)
-                },
-                function (error) {
-                    res.sendStatus(400).send(error);
+        var maxRank = 0;
+        model.widgetModel.findAllWidgetsForPage(pageId)
+            .then(function (widgets) {
+                    //get the max rank and increment it for the new widget.
+                    if (widgets.length == 0)
+                        widget.rank = 0;
+                    else {
+                        for (i in widgets) {
+                            if (widgets[i].rank > maxRank)
+                                maxRank = widgets[i].rank;
+                        }
+                        widget.rank = maxRank + 1;
+                    }
+                    model.widgetModel.createWidget(pageId, widget)
+                        .then(
+                            function (widObj) {
+                                res.send(widObj)
+                            },
+                            function (error) {
+                                res.sendStatus(400).send(error);
+                            }
+                        )
                 }
-            );
+            )
     }
 
     function findAllWidgetsForPage(req, res) {
@@ -44,9 +55,12 @@ module.exports = function (app, model) {
             .widgetModel
             .findAllWidgetsForPage(pageId)
             .then(
-                function (widObj) {
-                    if (widObj) {
-                        res.json(widObj);
+                function (widgets) {
+                    if (widgets) {
+                        widgets.sort(function (a, b) {
+                            return a.pos - b.pos;
+                        });
+                        res.json(widgets);
                     } else {
                         res.send('0');
                     }
@@ -84,7 +98,7 @@ module.exports = function (app, model) {
             .updateWidget(widgetId, widget)
             .then(
                 function (status) {
-                    res.send(200);
+                    res.sendStatus(200);
                 },
                 function (error) {
                     res.sendStatus(400).send(error);
@@ -99,7 +113,7 @@ module.exports = function (app, model) {
             .deleteWidget(widgetId)
             .then(
                 function (status) {
-                    res.send(200);
+                    res.sendStatus(200);
                 },
                 function (error) {
                     res.sendStatus(400).send(error);
@@ -111,13 +125,12 @@ module.exports = function (app, model) {
         var pageId = req.params.pageId;
         var start = parseInt(req.query.start);
         var end = parseInt(req.query.end);
-        var index = 0, startIndex = 0, endIndex = 0;
         model
             .widgetModel
             .reorderWidget(pageId, start, end)
             .then(
                 function (status) {
-                    res.send(200);
+                    res.sendStatus(200);
                 },
                 function (error) {
                     res.sendStatus(400).send(error);

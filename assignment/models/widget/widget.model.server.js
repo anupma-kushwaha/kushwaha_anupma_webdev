@@ -7,14 +7,14 @@ module.exports = function () {
     var WidgetModel = mongoose.model("WidgetModel", WidgetSchema);
 
     var api = {
+        setModel: setModel,
         createWidget: createWidget,
         findAllWidgetsForPage: findAllWidgetsForPage,
         findWidgetById: findWidgetById,
         updateWidget: updateWidget,
         deleteWidget: deleteWidget,
         reorderWidget: reorderWidget,
-        updateImage: updateImage,
-        setModel: setModel
+        updateImage: updateImage
     };
     return api;
 
@@ -23,41 +23,23 @@ module.exports = function () {
     }
 
     function createWidget(pageId, widget) {
-        return model
-            .pageModel
-            .findPageById(pageId)
-            .then(function (pageObj) {
-                WidgetModel
-                    .create(widget)
-                    .then(function (widObj) {
-                        widObj._page = pageObj._id;
-                        widObj.widgetType = widget.widgetType;
-                        widObj.save();
-                        pageObj.widgets.push(widObj);
-                        pageObj.save();
-                        return widObj;
-                    }, function (error) {
-                        console.log(error);
-                    });
-            });
-        /*
-         return WidgetModel
-         .create(widget)
-         .then(function (widObj) {
-         model
-         .pageModel
-         .findPageById(pageId)
-         .then(function (pageObj) {
-         widObj._page = pageObj._id;
-         widObj.widgetType = widget.widgetType;
-         widObj.save();
-         pageObj.widgets.push(widObj);
-         return pageObj.save();
-         }, function (error) {
-         console.log(error);
-         });
-         });
-         */
+        return WidgetModel.create(widget)
+            .then(
+                function (widObj) {
+                    model.pageModel.findPageById(pageId)
+                        .then(
+                            function (pageObj) {
+                                pageObj.widgets.push(widObj);
+                                widObj._page = pageObj._id;
+                                widObj.save();
+                                pageObj.save();
+                            }, function (error) {
+                                console.log(error);
+                            });
+                }
+                , function (error) {
+                    console.log(error);
+                });
     }
 
     function findAllWidgetsForPage(pageId) {
@@ -120,38 +102,78 @@ module.exports = function () {
                     });
                 break;
         }
-        /*        return WidgetModel
-         .update(
-         {
-         _id: widgetId
-         },
-         {
-         name: widget.name,
-         text: widget.text,
-         placeholder: widget.placeholder,
-         description: widget.description,
-         url: widget.url,
-         width: widget.width,
-         height: widget.height,
-         size: widget.size,
-         rows: widget.rows,
-         class: widget.class,
-         icon: widget.icon,
-         deletable: widget.deletable,
-         formatted: widget.formatted
-         }
-         );*/
     }
 
     function deleteWidget(widgetId) {
-        return WidgetModel
-            .remove({_id: widgetId});
+        return WidgetModel.findById(widgetId)
+            .then(function (widget) {
+                WidgetModel.find(
+                    {
+                        rank: {$gt: widget.rank}
+                    }
+                ).then(function (widgets) {
+                    if (widgets.length == 0) {
+                        return WidgetModel.remove(
+                            {
+                                _id: widgetId
+                            }
+                        );
+                    }
+                    widgets.sort(function (a, b) {
+                        return a.rank - b.rank;
+                    });
+                    //move all widgets below on position up.
+                    for (var i = 0; i < widgets.length; i++) {
+                        widgets[i].rank = widgets[i].rank - 1;
+                        widgets[i].save();
+                    }
+                    return WidgetModel
+                        .remove({_id: widgetId});
+                })
+            });
     }
 
     function reorderWidget(pageId, start, end) {
-        /* TODO
-         * function sortWidget(req, res) {
-         * */
+        //if widget is moved from top to bottom
+        if (start < end) {
+            return WidgetModel.find({
+                    _page: pageId,
+                    rank: {$gt: (start - 1), $lt: (end + 1)}
+                }
+            ).then(function (widgets) {
+                if (widgets.length == 1)
+                    return;
+                widgets.sort(function (a, b) {
+                    return a.rank - b.rank;
+                });
+                widgets[0].rank = end;
+                widgets[0].save();
+                for (var i = 1; i < widgets.length; i++) {
+                    widgets[i].rank = widgets[i].rank - 1;
+                    widgets[i].save();
+                }
+            });
+        }
+        //if widget is moved from bottom to top
+        else {
+            return WidgetModel.find({
+                    _page: pageId,
+                    rank: {$gt: (end - 1), $lt: (start + 1)}
+                }
+            ).then(function (widgets) {
+                if (widgets.length == 1)
+                    return;
+                widgets.sort(function (a, b) {
+                    return a.rank - b.rank;
+                });
+                widgets[widgets.length - 1].rank = end;
+                widgets[widgets.length - 1].save();
+                for (var i = 0; i < widgets.length - 1; i++) {
+                    widgets[i].rank = widgets[i].rank + 1;
+                    widgets[i].save();
+                }
+            });
+        }
     }
 
     function updateImage(widgetId, widget) {
@@ -165,6 +187,7 @@ module.exports = function () {
             });
 
     }
+
 };
 
 /*
