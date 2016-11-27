@@ -21,8 +21,8 @@
         function init() {
             WidgetService
                 .findAllWidgetsForPage(pid)
-                .success(function (widgets) {
-                    vm.widgets = widgets;
+                .success(function (page) {
+                    vm.widgets = page.widgets;
                 })
                 .error(function (error) {
                     vm.error = "No widget found!";
@@ -71,8 +71,8 @@
         function init() {
             WidgetService
                 .findAllWidgetsForPage(pid)
-                .success(function (widgets) {
-                    vm.widgets = widgets;
+                .success(function (page) {
+                    vm.widgets = page.widgets;
                 })
                 .error(function (error) {
                     vm.error = "No widget found!";

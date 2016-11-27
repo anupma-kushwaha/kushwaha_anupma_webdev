@@ -1,4 +1,4 @@
-module.exports = function (app) {
+module.exports = function (app, model) {
 
     var mime = require('mime');   // npm install mime --save
     var multer = require('multer'); // npm install multer --save
@@ -12,22 +12,6 @@ module.exports = function (app) {
     });
     var upload = multer({storage: storage});
 
-    var widgets = [
-        {_id: "123", widgetType: "HEADER", pageId: "321", size: 2, text: "GIZMODO"},
-        {_id: "234", widgetType: "HEADER", pageId: "321", size: 4, text: "Lorem ipsum"},
-        {_id: "345", widgetType: "IMAGE", pageId: "321", width: "100%", url: "http://lorempixel.com/400/200/"},
-        {_id: "456", widgetType: "HTML", pageId: "321", text: "<p>Lorem ipsum</p>"},
-        {_id: "567", widgetType: "HEADER", pageId: "321", size: 4, text: "Lorem ipsum"},
-        {_id: "678", widgetType: "YOUTUBE", pageId: "321", width: "100%", url: "https://youtu.be/AM2Ivdi9c4E"},
-        {_id: "789", widgetType: "HTML", pageId: "321", text: "<p>Lorem ipsum</p>"},
-        {
-            _id: "890",
-            widgetType: "HTML",
-            pageId: "321",
-            text: '<p> <a href="http://www.amazon.com/Computer-Networks-Approach-Kaufmann-Networking/dp/0123705487"> Computer Networks: A Systems Approach, 4th Edition</a>by Larry Peterson and Bruce Davie, Morgan Kaufmann. </p>'
-        }
-    ];
-
     app.post('/api/page/:pageId/widget', createWidget);
     app.get('/api/page/:pageId/widget', findAllWidgetsForPage);
     app.get('/api/widget/:widgetId', findWidgetById);
@@ -39,67 +23,106 @@ module.exports = function (app) {
     function createWidget(req, res) {
         var pageId = req.params.pageId;
         var widget = req.body;
-        var id = ((new Date()).getTime()).toString();
-        widget._id = id;
-        widget.pageId = pageId;
-        widgets.push(widget);
-        res.json(widget);
+        console.log(req.body);
+        model
+            .widgetModel
+            .createWidget(pageId, widget)
+            .then(
+                function (widObj) {
+                    console.log(JSON.stringify(widObj));
+                    res.send(widObj)
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
     }
 
     function findAllWidgetsForPage(req, res) {
         var pageId = req.params.pageId;
-        var widgetsForPage = [];
-        for (var w in widgets) {
-            widget = widgets[w];
-            if (widget.pageId === pageId) {
-                widgetsForPage.push(widget)
-            }
-        }
-        res.json(widgetsForPage);
+        model
+            .widgetModel
+            .findAllWidgetsForPage(pageId)
+            .then(
+                function (widObj) {
+                    if (widObj) {
+                        res.json(widObj);
+                    } else {
+                        res.send('0');
+                    }
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
     }
 
     function findWidgetById(req, res) {
         var widgetId = req.params.widgetId;
-        for (var u in widgets) {
-            var widget = widgets[u];
-            if (widget._id === widgetId) {
-                res.send(widget);
-                return;
-            }
-        }
-        res.sendStatus(400);
+        model
+            .widgetModel
+            .findWidgetById(widgetId)
+            .then(
+                function (widObj) {
+                    if (widObj) {
+                        res.json(widObj);
+                    } else {
+                        res.send('0');
+                    }
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
     }
 
     function updateWidget(req, res) {
         var widgetId = req.params.widgetId;
         var widget = req.body;
-        for (var i = 0; i < widgets.length; i++) {
-            var widgetsObj = widgets[i];
-            if (widgetsObj._id === widgetId) {
-                widgetsObj.widgetType = widget.widgetType;
-                widgetsObj.pageId = widget.pageId;
-                widgetsObj.size = widget.size;
-                widgetsObj.text = widget.text;
-                widgetsObj.url = widget.url;
-                widgetsObj.width = widget.width;
-                res.json(widgetsObj);
-                return
-            }
-        }
-        res.sendStatus(400);
+        model
+            .widgetModel
+            .updateWidget(widgetId, widget)
+            .then(
+                function (status) {
+                    res.send(200);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            )
     }
 
     function deleteWidget(req, res) {
         var widgetId = req.params.widgetId;
-        for (var w in widgets) {
-            var widget = widgets[w];
-            if (widget._id === widgetId) {
-                delete widgets[w];
-                res.json(widgets[w]);
-                return;
-            }
-        }
-        res.sendStatus(400);
+        model
+            .widgetModel
+            .deleteWidget(widgetId)
+            .then(
+                function (status) {
+                    res.send(200);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            )
+    }
+
+    function sortWidget(req, res) {
+        var pageId = req.params.pageId;
+        var start = parseInt(req.query.start);
+        var end = parseInt(req.query.end);
+        var index = 0, startIndex = 0, endIndex = 0;
+        model
+            .widgetModel
+            .reorderWidget(pageId, start, end)
+            .then(
+                function (status) {
+                    res.send(200);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            )
     }
 
     function uploadImage(req, res) {
@@ -109,43 +132,31 @@ module.exports = function (app) {
         var pageId = req.body.pageId;
         var myFile = req.file;
         var width = req.body.width;
+        var text = req.body.text;
         var name = req.body.name;
         var description = req.body.description;
         var filename = myFile.filename;     // new file name in upload folder
-        for (var w in widgets) {
-            var widget = widgets[w];
-            if (widget._id === widgetId) {
-                widget.url = '/assignment/uploads/' + filename;
-                widget.width = width;
-                widget.name = name;
-                widget.description = description;
-                var url = "/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId;
-                res.redirect(url);
-                return;
-            }
-        }
-        res.sendStatus(400);
+
+        var url = '/assignment/uploads/' + filename;
+        var widget = {
+            "name": name,
+            "text": text,
+            "url": url,
+            "width": width
+        };
+
+        model
+            .widgetModel
+            .updateImage(widgetId, widget)
+            .then(
+                function (status) {
+                    var url = "/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget";
+                    res.redirect(url);
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            )
     }
 
-    function sortWidget(req, res) {
-        var pageId = req.params.pageId;
-        var start = parseInt(req.query.start);
-        var end = parseInt(req.query.end);
-        var index = 0, startIndex = 0, endIndex = 0;
-        for (var w in widgets) {
-            var widget = widgets[w];
-            var pid = widget.pageId;
-            if (pid === pageId) {
-                if (index == start) {
-                    startIndex = w;
-                }
-                if (index == end) {
-                    endIndex = w;
-                }
-                index++;
-            }
-        }
-        widgets.splice(endIndex, 0, widgets.splice(startIndex, 1)[0]);
-        res.sendStatus(200);
-    }
 };

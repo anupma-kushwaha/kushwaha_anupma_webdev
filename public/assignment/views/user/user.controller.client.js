@@ -56,6 +56,7 @@
         var vm = this;
         vm.updateProfile = updateProfile;
         vm.getWebsites = getWebsites;
+        vm.deleteUser = deleteUser;
 
         var userId = ($routeParams.uid);
 
@@ -78,8 +79,10 @@
             var userId = ($routeParams.uid);
             UserService
                 .updateUser(userId, user)
-                .success(function (user){
-                    vm.user = user;
+                .success(function (status){
+                    if(status == 200){
+                        $location.url("/user/" + userId);
+                    }
                 })
                 .error(function (){
                     vm.error = "No such user";
@@ -89,6 +92,23 @@
         function getWebsites() {
             var userId = ($routeParams.uid);
             $location.url("/user/" + userId + "/website");
+        }
+        
+        function deleteUser() {
+            var userId = ($routeParams.uid);
+            UserService
+                .deleteUser(userId)
+                .success(function (status){
+                    if(status == "OK") {
+                        $location.url("/#/login");
+                    }
+                })
+                .error(function (){
+                    vm.error = "No such user";
+                });
+
+
+
         }
     }
 
