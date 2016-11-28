@@ -21,12 +21,12 @@ module.exports = function (app, model) {
     app.put("/page/:pageId/widget", sortWidget);
 
     function createWidget(req, res) {
-        var pageId = req.params.pageId;
         var widget = req.body;
+        var pageId = req.params.pageId;
         var maxRank = 0;
         model.widgetModel.findAllWidgetsForPage(pageId)
             .then(function (widgets) {
-                    //get the max rank and increment it for the new widget.
+                    //get the max rank and increment it for the new object.
                     if (widgets.length == 0)
                         widget.rank = 0;
                     else {
@@ -37,21 +37,17 @@ module.exports = function (app, model) {
                         widget.rank = maxRank + 1;
                     }
                     model.widgetModel.createWidget(pageId, widget)
-                        .then(
-                            function (widObj) {
-                                res.send(widObj)
-                            },
-                            function (error) {
-                                res.sendStatus(400).send(error);
-                            }
-                        )
-                }
-            )
+                        .then(function (widObj) {
+                            res.send(widObj);
+                        }, function (error) {
+                            res.sendStatus(400).send(error);
+                        })
+                })
     }
 
     function findAllWidgetsForPage(req, res) {
         var pageId = req.params.pageId;
-         model.widgetModel.findAllWidgetsForPage(pageId)
+        model.widgetModel.findAllWidgetsForPage(pageId)
             .then(
                 function (widgets) {
                     if (widgets) {

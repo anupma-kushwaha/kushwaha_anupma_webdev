@@ -65,9 +65,12 @@
         var uid = ($routeParams.uid);
         var wid = ($routeParams.wid);
         var pid = ($routeParams.pid);
+        vm.widgetType = $routeParams["type"];
         vm.uid = uid;
         vm.wid = wid;
         vm.pid = pid;
+        vm.widget = new Object();
+
         function init() {
             WidgetService
                 .findAllWidgetsForPage(pid)
@@ -81,19 +84,14 @@
 
         init();
 
-        function createWidget(widgetType) {
-            var widget = {widgetType: widgetType, pageId: pid};
-            WidgetService
-                .createWidget(pid, widget)
+        function createWidget(widget,widgetType) {
+            vm.widget.widgetType = widgetType;
+            WidgetService.createWidget(vm.pid, vm.widget)
                 .success(function (widget) {
-                    var widgetObj = widget;
-                    wgid = widgetObj._id;
-                    vm.wgid = wgid;
-                    vm.widget = widgetObj;
-                    $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget/" + wgid);
+                    $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget");
                 })
                 .error(function (error) {
-                    vm.error = "No widget found!";
+                    vm.error = "No widget created!";
                 });
         }
     }

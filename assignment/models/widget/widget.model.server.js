@@ -25,22 +25,19 @@ module.exports = function () {
 
     function createWidget(pageId, widget) {
         return WidgetModel.create(widget)
-            .then(
-                function (widObj) {
-                    model.pageModel.findPageById(pageId)
-                        .then(
-                            function (pageObj) {
-                                pageObj.widgets.push(widObj);
-                                widObj._page = pageObj._id;
-                                widObj.save();
-                                pageObj.save();
-                            }, function (error) {
-                                console.log(error);
-                            });
-                }
-                , function (error) {
-                    console.log(error);
-                });
+            .then(function (widgetObj) {
+                model.pageModel.findPageById(pageId)
+                    .then(function (pageObj) {
+                        pageObj.widgets.push(widgetObj);
+                        widgetObj._page = pageObj._id;
+                        widgetObj.save();
+                        pageObj.save();
+                    }, function (error) {
+                        console.log(error);
+                    });
+            }, function (error) {
+                console.log(error);
+            });
     }
 
     function findAllWidgetsForPage(pageId) {
@@ -195,4 +192,5 @@ module.exports = function () {
 
     }
 
-};
+}
+;

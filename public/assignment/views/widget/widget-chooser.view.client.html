@@ -19,19 +19,16 @@
     <div class="row">
         <div class="col-xs-12 col-xs-offset-left-10">
             <ul style="list-style-type:none" class="chooser">
-                <li><a ng-click="model.createWidget('HEADER')"><label>Header</label></a></li>
-                <li><a ng-click="model.createWidget('HTML')"><label>HTML</label></a></li>
-                <li><a ng-click="model.createWidget('IMAGE')"><label>Image</label></a></li>
-                <li><a ng-click="model.createWidget('YOUTUBE')"><label>Youtube</label></a></li>
-                <li><a ng-click="model.createWidget('TEXT')"><label>Text</label></a></li>
-                <!--
-                                <li><a href="views/widget/widget-text.view.client.html"><label>Text Input</label></a></li>
-                                <li><a href="views/widget/widget-dataTable.view.client.html"><label>Data Table</label></a></li>
-                                <li><a href="views/widget/widget-label.view.client.html"><label>Label</label></a></li>
-                                <li><a href="views/widget/widget-link.view.client.html"><label>Link</label></a></li>
-                                <li><a href="views/widget/widget-button.view.client.html"><label>Button</label></a></li>
-                                <li><a href="views/widget/widget-repeater.view.client.html"><label>Repeater</label></a></li>
-                -->
+                <li><a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/new/HEADER">
+                    <label>Header</label></a></li>
+                <li><a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/new/HTML">
+                    <label>HTML</label></a></li>
+                <li><a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/new/IMAGE">
+                    <label>Image</label></a></li>
+                <li><a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/new/YOUTUBE">
+                <label>Youtube</label></a></li>
+                <li><a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/new/TEXT">
+                    <label>Text</label></a></li>
             </ul>
         </div>
     </div>
