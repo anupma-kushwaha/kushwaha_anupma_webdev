@@ -14,4 +14,7 @@ require ("./assignment/app.js")(app);
 //  Set the environment variables
 var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+
+console.log(ip);
+console.log(port);
 app.listen(port, ip);
