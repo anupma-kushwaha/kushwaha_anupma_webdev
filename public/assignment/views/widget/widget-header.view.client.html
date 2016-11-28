@@ -6,15 +6,10 @@
                         class="glyphicon glyphicon-chevron-left"></span></a>
             </div>
         </div>
-        <div class="col-xs-8 col-sm-9">
+        <div class="col-xs-10 col-sm-11">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget">Edit Header Widget</a>
-            </div>
-        </div>
-        <div class="col-xs-2 col-sm-2">
-            <div class="navbar-text navbar-right">
-                <a ng-click="model.createWidget(model.widget,'HEADER')"><span
-                        class="glyphicon glyphicon-ok"></span></a>
+                <a class="navbar-brand" href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget">
+                    Create HEADER Widget</a>
             </div>
         </div>
     </div>
@@ -67,8 +62,8 @@
     </form>
     <div class="form-group">
         <div class="col-xs-12">
-            <a ng-click="model.deleteWidget()"
-               class="btn btn-danger btn-block">Delete</a>
+            <a ng-click="model.createWidget(model.widget,'HEADER')"
+               class="btn btn-primary btn-block margin-top-6">Create</a>
         </div>
     </div>
 </div>

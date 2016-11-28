@@ -15,7 +15,7 @@ module.exports = function () {
         deleteWidget: deleteWidget,
         deleteAllWidgetsForPage: deleteAllWidgetsForPage,
         reorderWidget: reorderWidget,
-        updateImage: updateImage
+        uploadImage: uploadImage
     };
     return api;
 
@@ -180,7 +180,7 @@ module.exports = function () {
         }
     }
 
-    function updateImage(widgetId, widget) {
+    function uploadImage(widgetId, widget) {
         return WidgetModel.update(
             {_id: widgetId},
             {

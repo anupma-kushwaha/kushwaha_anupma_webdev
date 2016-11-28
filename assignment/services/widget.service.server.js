@@ -26,23 +26,23 @@ module.exports = function (app, model) {
         var maxRank = 0;
         model.widgetModel.findAllWidgetsForPage(pageId)
             .then(function (widgets) {
-                    //get the max rank and increment it for the new object.
-                    if (widgets.length == 0)
-                        widget.rank = 0;
-                    else {
-                        for (i in widgets) {
-                            if (widgets[i].rank > maxRank)
-                                maxRank = widgets[i].rank;
-                        }
-                        widget.rank = maxRank + 1;
+                //get the max rank and increment it for the new object.
+                if (widgets.length == 0)
+                    widget.rank = 0;
+                else {
+                    for (i in widgets) {
+                        if (widgets[i].rank > maxRank)
+                            maxRank = widgets[i].rank;
                     }
-                    model.widgetModel.createWidget(pageId, widget)
-                        .then(function (widObj) {
-                            res.send(widObj);
-                        }, function (error) {
-                            res.sendStatus(400).send(error);
-                        })
-                })
+                    widget.rank = maxRank + 1;
+                }
+                model.widgetModel.createWidget(pageId, widget)
+                    .then(function (widObj) {
+                        res.send(widObj);
+                    }, function (error) {
+                        res.sendStatus(400).send(error);
+                    })
+            })
     }
 
     function findAllWidgetsForPage(req, res) {
@@ -133,7 +133,6 @@ module.exports = function (app, model) {
     }
 
     function uploadImage(req, res) {
-        var widgetId = req.body.widgetId;
         var userId = req.body.userId;
         var websiteId = req.body.websiteId;
         var pageId = req.body.pageId;
@@ -146,24 +145,20 @@ module.exports = function (app, model) {
 
         var url = '/assignment/uploads/' + filename;
         var widget = {
+            "widgetType": "IMAGE",
             "name": name,
             "text": text,
             "url": url,
             "width": width
         };
 
-        model
-            .widgetModel
-            .updateImage(widgetId, widget)
-            .then(
-                function (status) {
-                    var url = "/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget";
-                    res.redirect(url);
-                },
-                function (error) {
-                    res.sendStatus(400).send(error);
-                }
-            )
+        model.widgetModel.createWidget(pageId, widget)
+            .then(function (widObj) {
+                var url = "/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget";
+                res.redirect(url);
+            }, function (error) {
+                res.sendStatus(400).send(error);
+            });
     }
 
 };
