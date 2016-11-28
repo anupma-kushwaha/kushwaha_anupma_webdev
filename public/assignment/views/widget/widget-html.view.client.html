@@ -28,18 +28,22 @@
                 <label for="name">Name</label>
             </div>
         </div>
-        <div ng-model="model.widget.text"
-             id="name"
-             text-angular
-             ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
-        ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
-        ['indent','outdent'],['html']]">
+        <div class="form-group">
+            <div class="col-xs-12">
+                <div ng-model="model.widget.text"
+                     id="name"
+                     text-angular
+                     ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
+            ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+            ['indent','outdent'],['html']]">
+                </div>
+            </div>
         </div>
     </form>
     <div class="form-group">
         <div class="col-xs-12">
             <a ng-click="model.deleteWidget()"
-               class="btn btn-danger btn-block">Delete</a>
+               class="btn btn-danger btn-block margin-top-6">Delete</a>
         </div>
     </div>
 </div>

@@ -51,14 +51,12 @@ module.exports = function (app, model) {
 
     function findAllWidgetsForPage(req, res) {
         var pageId = req.params.pageId;
-        model
-            .widgetModel
-            .findAllWidgetsForPage(pageId)
+         model.widgetModel.findAllWidgetsForPage(pageId)
             .then(
                 function (widgets) {
                     if (widgets) {
                         widgets.sort(function (a, b) {
-                            return a.pos - b.pos;
+                            return a.rank - b.rank;
                         });
                         res.json(widgets);
                     } else {

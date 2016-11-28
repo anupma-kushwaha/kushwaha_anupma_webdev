@@ -12,7 +12,6 @@ module.exports = function () {
         findPageById: findPageById,
         updatePage: updatePage,
         deletePage: deletePage,
-        findAllWidgetsForPage: findAllWidgetsForPage,
         setModel: setModel
     };
     return api;
@@ -22,12 +21,9 @@ module.exports = function () {
     }
 
     function createPage(websiteId, page) {
-        return PageModel
-            .create(page)
+        return PageModel.create(page)
             .then(function (pageObj) {
-                model
-                    .websiteModel
-                    .findWebsiteById(websiteId)
+                model.websiteModel.findWebsiteById(websiteId)
                     .then(function (websiteObj) {
                         pageObj._website = websiteObj._id;
                         pageObj.save();
@@ -40,7 +36,9 @@ module.exports = function () {
     }
 
     function findAllPagesForWebsite(websiteId) {
-        return model.websiteModel.findAllPagesForWebsite(websiteId);
+        return PageModel.find(
+            {_website : websiteId}
+        );
     }
 
     function findPageById(pageId) {
@@ -48,30 +46,21 @@ module.exports = function () {
     }
 
     function updatePage(pageId, page) {
-        return PageModel
-            .update(
-                {
-                    _id: pageId
-                },
-                {
-                    name: page.name,
-                    title: page.title,
-                    description: page.description
-                }
-            );
+        return PageModel.update({
+                _id: pageId
+            },
+            {
+                name: page.name,
+                title: page.title,
+                description: page.description
+            }
+        );
     }
 
     function deletePage(pageId) {
-        return PageModel
-            .remove({_id: pageId});
+        return PageModel.remove({_id: pageId});
     }
 
-    function findAllWidgetsForPage(pageId) {
-        return PageModel
-            .findById(pageId)
-            .populate("widgets")
-            .exec();
-    }
 };
 
 

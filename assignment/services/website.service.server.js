@@ -9,9 +9,7 @@ module.exports = function (app, model) {
     function createWebsite(req, res) {
         var userId = req.params.userId;
         var website = req.body;
-        model
-            .websiteModel
-            .createWebsiteForUser(userId, website)
+        model.websiteModel.createWebsiteForUser(userId, website)
             .then(
                 function (websiteObj) {
                     res.send(websiteObj)
@@ -24,13 +22,11 @@ module.exports = function (app, model) {
 
     function findAllWebsitesForUser(req, res) {
         var userId = req.params.userId;
-        model
-            .websiteModel
-            .findAllWebsitesForUser(userId)
+        model.websiteModel.findAllWebsitesForUser(userId)
             .then(
-                function (websiteObj) {
-                    if (websiteObj) {
-                        res.json(websiteObj);
+                function (websites) {
+                    if (websites) {
+                        res.json(websites);
                     } else {
                         res.send('0');
                     }
@@ -43,9 +39,7 @@ module.exports = function (app, model) {
 
     function findWebsiteById(req, res) {
         var websiteId = req.params.websiteId;
-        model
-            .websiteModel
-            .findWebsiteById(websiteId)
+        model.websiteModel.findWebsiteById(websiteId)
             .then(
                 function (websiteObj) {
                     if (websiteObj) {
@@ -63,9 +57,7 @@ module.exports = function (app, model) {
     function updateWebsite(req, res) {
         var websiteId = req.params.websiteId;
         var website = req.body;
-        model
-            .websiteModel
-            .updateWebsite(websiteId, website)
+        model.websiteModel.updateWebsite(websiteId, website)
             .then(
                 function (status) {
                     res.sendStatus(200);
@@ -78,9 +70,7 @@ module.exports = function (app, model) {
 
     function deleteWebsite(req, res) {
         var websiteId = req.params.websiteId;
-        model
-            .websiteModel
-            .deleteWebsite(websiteId)
+        model.websiteModel.deleteWebsite(websiteId)
             .then(
                 function (status) {
                     res.sendStatus(200);

@@ -12,7 +12,6 @@ module.exports = function () {
         findWebsiteById: findWebsiteById,
         updateWebsite: updateWebsite,
         deleteWebsite: deleteWebsite,
-        findAllPagesForWebsite: findAllPagesForWebsite,
         setModel: setModel
     };
     return api;
@@ -22,13 +21,10 @@ module.exports = function () {
     }
 
     function createWebsiteForUser(userId, website) {
-        console.log("website model - " + JSON.stringify(website));
-        return WebsiteModel
-            .create(website)
+
+        return WebsiteModel.create(website)
             .then(function (websiteObj) {
-                model
-                    .userModel
-                    .findUserById(userId)
+                model.userModel.findUserById(userId)
                     .then(function (userObj) {
                         websiteObj._user = userObj._id;
                         websiteObj.save();
@@ -41,7 +37,9 @@ module.exports = function () {
     }
 
     function findAllWebsitesForUser(userId) {
-        return model.userModel.findWebsitesForUser(userId);
+        return WebsiteModel.find(
+            {_user: userId}
+        );
     }
 
     function findWebsiteById(websiteId) {
@@ -49,27 +47,18 @@ module.exports = function () {
     }
 
     function updateWebsite(websiteId, website) {
-        return WebsiteModel
-            .update(
-                {
-                    _id: websiteId
-                },
-                {
-                    name: website.name,
-                    description: website.description
-                }
-            );
+        return WebsiteModel.update({
+                _id: websiteId
+            },
+            {
+                name: website.name,
+                description: website.description
+            }
+        );
     }
 
     function deleteWebsite(websiteId) {
-        return WebsiteModel
-            .remove({_id: websiteId});
+        return WebsiteModel.remove({_id: websiteId});
     }
 
-    function findAllPagesForWebsite(websiteId) {
-        return WebsiteModel
-            .findById(websiteId)
-            .populate("pages", "name")
-            .exec();
-    }
 };

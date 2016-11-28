@@ -13,6 +13,7 @@ module.exports = function () {
         findWidgetById: findWidgetById,
         updateWidget: updateWidget,
         deleteWidget: deleteWidget,
+        deleteAllWidgetsForPage: deleteAllWidgetsForPage,
         reorderWidget: reorderWidget,
         updateImage: updateImage
     };
@@ -43,7 +44,9 @@ module.exports = function () {
     }
 
     function findAllWidgetsForPage(pageId) {
-        return model.pageModel.findAllWidgetsForPage(pageId);
+        return WidgetModel.find(
+            {_page: pageId}
+        );
     }
 
     function findWidgetById(widgetId) {
@@ -88,7 +91,8 @@ module.exports = function () {
                         name: widget.name,
                         text: widget.text,
                         url: widget.url,
-                        width: widget.width
+                        width: widget.width,
+                        description: widget.description
                     });
                 break;
             case 'YOUTUBE':
@@ -127,10 +131,13 @@ module.exports = function () {
                         widgets[i].rank = widgets[i].rank - 1;
                         widgets[i].save();
                     }
-                    return WidgetModel
-                        .remove({_id: widgetId});
+                    return WidgetModel.remove({_id: widgetId});
                 })
             });
+    }
+
+    function deleteAllWidgetsForPage(pageId) {
+        return WidgetModel.remove({_page: pageId});
     }
 
     function reorderWidget(pageId, start, end) {
@@ -189,27 +196,3 @@ module.exports = function () {
     }
 
 };
-
-/*
-
- function sortWidget(req, res) {
- var pageId = req.params.pageId;
- var start = parseInt(req.query.start);
- var end = parseInt(req.query.end);
- var index = 0, startIndex = 0, endIndex = 0;
- for (var w in widgets) {
- var widget = widgets[w];
- var pid = widget.pageId;
- if (pid === pageId) {
- if (index == start) {
- startIndex = w;
- }
- if (index == end) {
- endIndex = w;
- }
- index++;
- }
- }
- widgets.splice(endIndex, 0, widgets.splice(startIndex, 1)[0]);
- res.sendStatus(200);
- }*/

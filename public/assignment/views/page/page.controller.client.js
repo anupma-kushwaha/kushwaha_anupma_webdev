@@ -15,8 +15,8 @@
         function init() {
             PageService
                 .findAllPagesForWebsite(wid)
-                .success(function (website){
-                    vm.pages = website.pages;
+                .success(function (pages){
+                    vm.pages = pages;
                 })
                 .error(function (error){
                     vm.error = "No websites found!";
@@ -36,8 +36,8 @@
         function init() {
             PageService
                 .findAllPagesForWebsite(wid)
-                .success(function (website){
-                    vm.pages = website.pages;
+                .success(function (pages){
+                    vm.pages = pages;
                 })
                 .error(function (error){
                     vm.error = "No websites found!";
@@ -71,8 +71,8 @@
         function init() {
             PageService
                 .findAllPagesForWebsite(wid)
-                .success(function (website){
-                    vm.pages = website.pages;
+                .success(function (pages){
+                    vm.pages = pages;
                 })
                 .error(function (error){
                     vm.error = "No pages found!";

@@ -8,9 +8,7 @@ module.exports = function (app, model) {
 
     function createUser(req, res) {
         var user = req.body;
-        model
-            .userModel
-            .createUser(user)
+        model.userModel.createUser(user)
             .then(
                 function (newuser) {
                     res.send(newuser)
@@ -33,9 +31,7 @@ module.exports = function (app, model) {
         function findUserByCredentials(req, res) {
             var username = req.query.username;
             var password = req.query.password;
-            model
-                .userModel
-                .findUserByCredentials(username, password)
+            model.userModel.findUserByCredentials(username, password)
                 .then(
                     function (user) {
                         if (user) {
@@ -52,9 +48,7 @@ module.exports = function (app, model) {
 
         function findUserByUsername(req, res) {
             var username = req.query.username;
-            model
-                .userModel
-                .findUserByUsername(username)
+            model.userModel.findUserByUsername(username)
                 .then(
                     function (user) {
                         if (user) {
@@ -72,9 +66,7 @@ module.exports = function (app, model) {
 
     function findUserById(req, res) {
         var userId = req.params.userId;
-        model
-            .userModel
-            .findUserById(userId)
+        model.userModel.findUserById(userId)
             .then(
                 function (user) {
                     if (user) {
@@ -93,9 +85,7 @@ module.exports = function (app, model) {
     function updateUser(req, res) {
         var userId = req.params.userId;
         var user = req.body;
-        model
-            .userModel
-            .updateUser(userId, user)
+        model.userModel.updateUser(userId, user)
             .then(
                 function (user) {
                     console.log(user);
@@ -114,9 +104,7 @@ module.exports = function (app, model) {
 
     function deleteUser(req, res) {
         var userId = req.params.userId;
-        model
-            .userModel
-            .deleteUser(userId)
+        model.userModel.deleteUser(userId)
             .then(
                 function (status) {
                     res.sendStatus(200);

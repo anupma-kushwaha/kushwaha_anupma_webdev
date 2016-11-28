@@ -121,3 +121,7 @@ li.borderless {
     width: 100%;
     height: 100%;
 }
+
+.margin-top-6 {
+    margin-top: 6px;
+}
