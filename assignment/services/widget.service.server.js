@@ -102,11 +102,8 @@ module.exports = function (app, model) {
 
     function deleteWidget(req, res) {
         var widgetId = req.params.widgetId;
-        model
-            .widgetModel
-            .deleteWidget(widgetId)
-            .then(
-                function (status) {
+        model.widgetModel.deleteWidget(widgetId)
+            .then(function (status) {
                     res.sendStatus(200);
                 },
                 function (error) {
@@ -152,13 +149,27 @@ module.exports = function (app, model) {
             "width": width
         };
 
-        model.widgetModel.createWidget(pageId, widget)
-            .then(function (widObj) {
-                var url = "/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget";
-                res.redirect(url);
-            }, function (error) {
-                res.sendStatus(400).send(error);
-            });
+        var maxRank = 0;
+        model.widgetModel.findAllWidgetsForPage(pageId)
+            .then(function (widgets) {
+                //get the max rank and increment it for the new object.
+                if (widgets.length == 0)
+                    widget.rank = 0;
+                else {
+                    for (i in widgets) {
+                        if (widgets[i].rank > maxRank)
+                            maxRank = widgets[i].rank;
+                    }
+                    widget.rank = maxRank + 1;
+                }
+                model.widgetModel.createWidget(pageId, widget)
+                    .then(function (widObj) {
+                        var url = "/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget";
+                        res.redirect(url);
+                    }, function (error) {
+                        res.sendStatus(400).send(error);
+                    })
+            })
     }
 
 };

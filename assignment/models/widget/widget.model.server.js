@@ -108,28 +108,31 @@ module.exports = function () {
     function deleteWidget(widgetId) {
         return WidgetModel.findById(widgetId)
             .then(function (widget) {
-                WidgetModel.find(
-                    {
-                        rank: {$gt: widget.rank}
-                    }
-                ).then(function (widgets) {
-                    if (widgets.length == 0) {
-                        return WidgetModel.remove(
+                WidgetModel.remove({_id: widgetId})
+                    .then(function () {
+                        WidgetModel.find(
                             {
-                                _id: widgetId
+                                rank: {$gt: widget.rank}
                             }
-                        );
-                    }
-                    widgets.sort(function (a, b) {
-                        return a.rank - b.rank;
+                        ).then(function (widgets) {
+                            if (widgets.length == 0) {
+                                WidgetModel.remove(
+                                    {
+                                        _id: widgetId
+                                    }
+                                );
+                            }
+                            widgets.sort(function (a, b) {
+                                return a.rank - b.rank;
+                            });
+                            //move all widgets below on position up.
+                            for (var i = 0; i < widgets.length; i++) {
+                                widgets[i].rank = widgets[i].rank - 1;
+                                widgets[i].save();
+                            }
+
+                        });
                     });
-                    //move all widgets below on position up.
-                    for (var i = 0; i < widgets.length; i++) {
-                        widgets[i].rank = widgets[i].rank - 1;
-                        widgets[i].save();
-                    }
-                    return WidgetModel.remove({_id: widgetId});
-                })
             });
     }
 
@@ -180,7 +183,7 @@ module.exports = function () {
         }
     }
 
-    function uploadImage(widgetId, widget) {
+    function  uploadImage(widgetId, widget) {
         return WidgetModel.update(
             {_id: widgetId},
             {

@@ -84,7 +84,7 @@
 
         init();
 
-        function createWidget(widget,widgetType) {
+        function createWidget(widget, widgetType) {
             vm.widget.widgetType = widgetType;
             WidgetService.createWidget(vm.pid, vm.widget)
                 .success(function (widget) {
@@ -136,8 +136,8 @@
         }
 
         function deleteWidget() {
-            WidgetService
-                .deleteWidget(vm.wgid)
+            var r = WidgetService.deleteWidget(vm.wgid);
+            r
                 .success(function (widget) {
                     $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget");
                 })
