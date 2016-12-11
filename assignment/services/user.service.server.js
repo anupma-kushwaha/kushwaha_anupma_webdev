@@ -31,6 +31,11 @@ module.exports = function (app, model) {
     app.delete('/api/user/:userId', deleteUser);
     app.post('/api/login', passport.authenticate('local'), login);
     app.post('/api/logout', logout);
+    app.post('/api/checkLogin', checkLogin);
+
+    function checkLogin(req, res) {
+        res.send(req.isAuthenticated() ? req.user : '0');
+    }
 
     function login(req, res) {
         var user = req.user;
@@ -54,7 +59,6 @@ module.exports = function (app, model) {
                 }
             );
     }
-
 
     function findUser(req, res) {
 

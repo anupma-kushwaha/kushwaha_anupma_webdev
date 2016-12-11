@@ -1,4 +1,4 @@
-(function() {
+(function () {
     angular
         .module("WebAppMaker")
         .config(Config);
@@ -8,8 +8,8 @@
 
             .when("/login", {
                 templateUrl: "views/user/login.view.client.html",
-                    controller: "LoginController",
-                    controllerAs: "model"
+                controller: "LoginController",
+                controllerAs: "model"
             })
             .when("/register", {
                 templateUrl: "views/user/register.view.client.html",
@@ -19,7 +19,8 @@
             .when("/user/:uid", {
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {checkLogin: checkLogin}
             })
 
             .when("/user/:uid/website", {
@@ -78,5 +79,21 @@
             .otherwise({
                 redirectTo: "/login"
             });
+
+        function checkLogin($q, UserService, $location) {
+            var deferred = $q.defer();
+            UserService.checkLogin()
+                .success(function (user) {
+                    if (user != '0')
+                        deferred.resolve();
+                    else {
+                        deferred.reject();
+                        $location.url("/");
+                    }
+                });
+            return deferred.promise;
+        }
+
+
     }
 })();

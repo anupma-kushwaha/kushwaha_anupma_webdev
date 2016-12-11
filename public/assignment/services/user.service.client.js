@@ -13,12 +13,13 @@
             "login": login,
             "logout": logout,
             "updateUser": updateUser,
-            "deleteUser": deleteUser
+            "deleteUser": deleteUser,
+            "checkLogin": checkLogin
         };
         return api;
 
         function createUser(user) {
-            return $http.post('/api/register',user);
+            return $http.post('/api/register', user);
         }
 
         function findUserById(userId) {
@@ -52,6 +53,10 @@
 
         function logout(user) {
             return $http.post("/api/logout");
+        }
+
+        function checkLogin() {
+            return $http.post('/api/checkLogin');
         }
     }
 })();
