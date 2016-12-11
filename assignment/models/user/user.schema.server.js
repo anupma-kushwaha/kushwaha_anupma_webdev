@@ -9,14 +9,8 @@ module.exports = function () {
         lastName: String,
         email: String,
         phone: String,
-        role: {type:String, default:"STUDENT", enum: ['ADMIN','STUDENT','FACULTY']},
         websites: [{type: mongoose.Schema.Types.ObjectId, ref: "WebsiteModel"}],
-        dateCreated: {type: Date, default: Date.now()},
-        facebook: {
-            id: String,
-            token: String
-        }
-
+        dateCreated: {type: Date, default: Date.now()}
     }, {collections: "user"});
 
     return UserScheme;
