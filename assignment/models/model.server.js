@@ -1,7 +1,8 @@
 module.exports = function () {
 
     var mongoose = require('mongoose');
-    var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://127.0.0.1:27017/wam-fall-2016';
+    //var connectionString = process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://127.0.0.1:27017/wam-fall-2016';
+    var connectionString = 'mongodb://127.0.0.1:27017/wam-fall-2016';
     mongoose.connect(connectionString);
 
     var userModel = require("./user/user.model.server")();
