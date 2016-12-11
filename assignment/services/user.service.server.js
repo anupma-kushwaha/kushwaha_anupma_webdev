@@ -244,20 +244,22 @@ module.exports = function (app, model) {
     }
 
     function localStrategy(username, password, done) {
-        model.userModel.findUserByCredentials(username, password)
-            .then(function (user) {
-                //if (user.username === username && user.password === password) {
-                if (user != null && user.username === username && bcrypt.compareSync(password, user.password)) {
-                    return done(null, user);
+        model.userModel
+            .findUserByUsername(username)
+            .then(
+                function (user) {
+                    if (user != null && user.username === username && bcrypt.compareSync(password, user.password)) {
+                        return done(null, user);
+                    } else {
+                        return done(null, '0');
+                    }
+                },
+                function (err) {
+                    if (err) {
+                        return done(err);
+                    }
                 }
-                else {
-                    return done(null, false);
-                }
-            }, function (err) {
-                if (err) {
-                    return done(err);
-                }
-            });
+            );
     }
 
     function logout(req, res) {

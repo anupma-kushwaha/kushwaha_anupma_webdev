@@ -22,7 +22,8 @@
                     ret
                         .success(function (user) {
                             if (user === '0') {
-                                vm.error = "No such user";
+                                $('#loginAlert').removeClass('hidden');
+                                vm.alert = "No such user";
                             }
                             else {
                                 $location.url("/user/" + user._id);
