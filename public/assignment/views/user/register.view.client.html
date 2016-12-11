@@ -1,7 +1,7 @@
 <div class="container-fluid row">
 
-    <div ng-show="model.error" class="alert alert-danger" role="alert">
-        {{model.error}}
+    <div id="registerAlert" class="alert alert-danger hidden">
+        {{model.alert}}
     </div>
 
     <form>
@@ -12,28 +12,28 @@
             <div class="col-xs-12">
                 <input type="text"
                        class="form-control"
-                       ng-model="model.username"
+                       ng-model="model.user.username"
                        placeholder="username"
                        required>
             </div>
             <div class="col-xs-12">
                 <input type="password"
                        class="form-control"
-                       ng-model="model.password"
+                       ng-model="model.user.password"
                        placeholder="password"
                        required>
             </div>
             <div class="col-xs-12">
                 <input type="password"
                        class="form-control"
-                       ng-model="model.password2"
+                       ng-model="model.user.password2"
                        placeholder="verify password"
                        required>
             </div>
         </div>
     </form>
     <div class="col-xs-12">
-        <a ng-click="model.register(model.username, model.password, model.password2)" class="btn btn-primary btn-block">Register</a>
+        <a ng-click="model.register(model.user)" class="btn btn-primary btn-block">Register</a>
     </div>
     <div class="col-xs-12">
         <a href="#/login" class="btn btn-danger btn-block">Cancel</a>

@@ -85,14 +85,19 @@
         init();
 
         function createWidget(widget, widgetType) {
-            vm.widget.widgetType = widgetType;
-            WidgetService.createWidget(vm.pid, vm.widget)
-                .success(function (widget) {
-                    $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget");
-                })
-                .error(function (error) {
-                    vm.error = "No widget created!";
-                });
+            if (!widget || !widget.name || widget.name == '') {
+                $('#newWidgetAlert').removeClass('hidden');
+                vm.alert = 'name required';
+            } else {
+                vm.widget.widgetType = widgetType;
+                WidgetService.createWidget(vm.pid, vm.widget)
+                    .success(function (widget) {
+                        $location.url("/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget");
+                    })
+                    .error(function (error) {
+                        vm.error = "No widget created!";
+                    });
+            }
         }
     }
 
@@ -124,15 +129,20 @@
         init();
 
         function updateWidget(widget) {
-            WidgetService
-                .updateWidget(vm.wgid, widget)
-                .success(function (widget) {
-                    var url = "/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget";
-                    $location.url(url);
-                })
-                .error(function (error) {
-                    vm.error = "No widget found!";
-                });
+            if (!vm.widget || !vm.widget.name || vm.widget.name == '') {
+                $('#editWidgetAlert').removeClass('hidden');
+                vm.alert = 'Widget name is required.';
+            } else {
+                WidgetService
+                    .updateWidget(vm.wgid, widget)
+                    .success(function (widget) {
+                        var url = "/user/" + uid + "/website/" + wid + "/page/" + pid + "/widget";
+                        $location.url(url);
+                    })
+                    .error(function (error) {
+                        vm.error = "No widget found!";
+                    });
+            }
         }
 
         function deleteWidget() {

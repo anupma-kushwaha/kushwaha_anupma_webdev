@@ -1,20 +1,27 @@
 {
-  "name": "web-dev",
+  "name": "kushwaha_anupma_webdev",
   "version": "1.0.0",
   "description": "Web Dev at Northeastern University",
   "main": "server.js",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.1",
+    "cookie-parser": "^1.4.3",
     "express": "^4.13.4",
+    "express-session": "^1.14.2",
     "mime": "^1.3.4",
     "mongoose": "^4.6.8",
-    "multer": "^1.2.0"
+    "multer": "^1.2.0",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "Jose G. Annunziato",
+  "author": "Anupma Kushwaha",
   "license": "ISC"
 }
