@@ -1,7 +1,7 @@
 <div class="container-fluid row">
 
-    <div id="loginAlert" class="alert alert-danger hidden">
-        {{model.alert}}
+    <div ng-show="model.error" class="alert alert-danger" role="alert">
+        {{model.error}}
     </div>
 
     <form>
@@ -41,7 +41,8 @@
                 <a href="/auth/facebook" class="btn btn-danger btn-block">
                     <span class="fa fa-facebook-official"></span>
                     Facebook
-                </a></div>
+                </a>
+            </div>
         </div>
     </form>
 </div>
