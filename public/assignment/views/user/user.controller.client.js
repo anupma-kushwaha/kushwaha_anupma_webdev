@@ -10,10 +10,11 @@
         var vm = this;
         vm.login = login;
 
-        function login(username, password) {
+        function login(user) {
             UserService
-                .findUserByCredentials(username, password)
-                .success(function(user){
+                .login(user)
+                //.findUserByCredentials(username, password)
+                .success(function (user) {
                     if (user === '0') {
                         vm.error = "No such user";
                     }
@@ -21,31 +22,31 @@
                         $location.url("/user/" + user._id);
                     }
                 })
-                .error(function (){
+                .error(function () {
                     vm.error = "No such user";
                 });
         }
     }
 
-    function RegisterController($location, UserService) {
+    function RegisterController($rootScope, $location, UserService) {
         var vm = this;
         vm.register = register;
 
-        function register(username, password, password2) {
-            if (username === undefined || password === undefined || password2 === undefined) {
+        function register(user) {
+            if (user.username === undefined || user.password === undefined || user.password2 === undefined) {
                 vm.error = "Values cannot be blank";
             }
-            else if (password != password2) {
+            else if (user.password != user.password2) {
                 vm.error = "Passwords do not match.";
             }
             else {
-                var userJson = {username: username, password: password};
                 UserService
-                    .createUser(userJson)
-                    .success(function (user){
-                        $location.url("/user/" + user._id);
+                    .createUser(user)
+                    .success(function (userObj) {
+                        $rootScope.currentUser = userObj;
+                        $location.url("/user/" + userObj._id);
                     })
-                    .error(function(error){
+                    .error(function (error) {
                         vm.error = "Cannot create a user";
                     });
             }
@@ -57,21 +58,23 @@
         vm.updateProfile = updateProfile;
         vm.getWebsites = getWebsites;
         vm.deleteUser = deleteUser;
+        vm.logout = logout;
 
         var userId = ($routeParams.uid);
 
         function init() {
             UserService
                 .findUserById(userId)
-                .success(function (user){
-                    if(user!='0'){
+                .success(function (user) {
+                    if (user != '0') {
                         vm.user = user;
                     }
                 })
-                .error(function (){
+                .error(function () {
                     vm.error = "No such user";
                 });
         }
+
         init();
 
         function updateProfile() {
@@ -79,12 +82,12 @@
             var userId = ($routeParams.uid);
             UserService
                 .updateUser(userId, user)
-                .success(function (status){
-                    if(status == 200){
+                .success(function (status) {
+                    if (status == 200) {
                         $location.url("/user/" + userId);
                     }
                 })
-                .error(function (){
+                .error(function () {
                     vm.error = "No such user";
                 });
         }
@@ -93,22 +96,26 @@
             var userId = ($routeParams.uid);
             $location.url("/user/" + userId + "/website");
         }
-        
+
         function deleteUser() {
             var userId = ($routeParams.uid);
             UserService
                 .deleteUser(userId)
-                .success(function (status){
-                    if(status == "OK") {
+                .success(function (status) {
+                    if (status == "OK") {
                         $location.url("/#/login");
                     }
                 })
-                .error(function (){
+                .error(function () {
                     vm.error = "No such user";
                 });
+        }
 
-
-
+        function logout() {
+            UserService.logout()
+                .then(function () {
+                    $location.url("/#/login");
+                })
         }
     }
 
