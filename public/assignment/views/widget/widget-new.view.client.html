@@ -21,6 +21,9 @@
 </nav>
 
 <div class="container-fluid">
+    <div id="newWidgetAlert" class="alert alert-danger hidden container-fluid">
+        {{model.alert}}
+    </div>
     <div ng-switch="model.widgetType">
         <div ng-switch-when="HTML">
             <div ng-include="'views/widget/widget-html.view.client.html'"></div>

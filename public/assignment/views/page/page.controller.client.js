@@ -15,13 +15,14 @@
         function init() {
             PageService
                 .findAllPagesForWebsite(wid)
-                .success(function (pages){
+                .success(function (pages) {
                     vm.pages = pages;
                 })
-                .error(function (error){
+                .error(function (error) {
                     vm.error = "No websites found!";
                 });
         }
+
         init();
     }
 
@@ -36,25 +37,30 @@
         function init() {
             PageService
                 .findAllPagesForWebsite(wid)
-                .success(function (pages){
+                .success(function (pages) {
                     vm.pages = pages;
                 })
-                .error(function (error){
+                .error(function (error) {
                     vm.error = "No websites found!";
                 });
         }
+
         init();
 
-        function createPage(pageName, pageTitle) {
-            var page = {name: pageName, title: pageTitle};
-            PageService
-                .createPage(wid, page)
-                .success(function (page){
-                    $location.url("/user/" + uid + "/website/" + wid + "/page");
-                })
-                .error(function (error){
-                    vm.error = "No websites found!";
-                });
+        function createPage(page) {
+            if (!page || !page.name || page.name == '') {
+                $('#newPageAlert').removeClass('hidden');
+                vm.alert = 'Page name is required';
+            } else {
+                PageService
+                    .createPage(wid, page)
+                    .success(function (page) {
+                        $location.url("/user/" + uid + "/website/" + wid + "/page");
+                    })
+                    .error(function (error) {
+                        vm.error = "No websites found!";
+                    });
+            }
         }
     }
 
@@ -71,42 +77,48 @@
         function init() {
             PageService
                 .findAllPagesForWebsite(wid)
-                .success(function (pages){
+                .success(function (pages) {
                     vm.pages = pages;
                 })
-                .error(function (error){
+                .error(function (error) {
                     vm.error = "No pages found!";
                 });
 
             PageService
                 .findPageById(pid)
-                .success(function (page){
+                .success(function (page) {
                     vm.page = page;
                 })
-                .error(function (error){
+                .error(function (error) {
                     vm.error = "No page found!";
                 });
         }
+
         init();
 
         function updatePage(page) {
-            PageService
-                .updatePage(vm.pid, page)
-                .success(function (page){
-                    $location.url("/user/" + uid + "/website/" + wid + "/page");
-                })
-                .error(function (error){
-                    vm.error = "No pages found!";
-                });
+            if (!page || !page.name || page.name == '') {
+                $('#editPageAlert').removeClass('hidden');
+                vm.alert = 'Page name is required';
+            } else {
+                PageService
+                    .updatePage(vm.pid, page)
+                    .success(function (page) {
+                        $location.url("/user/" + uid + "/website/" + wid + "/page");
+                    })
+                    .error(function (error) {
+                        vm.error = "No pages found!";
+                    });
+            }
         }
 
         function deletePage() {
             PageService
                 .deletePage(vm.pid)
-                .success(function (pages){
+                .success(function (pages) {
                     $location.url("/user/" + uid + "/website/" + wid + "/page");
                 })
-                .error(function (error){
+                .error(function (error) {
                     vm.error = "No pages found!";
                 });
         }

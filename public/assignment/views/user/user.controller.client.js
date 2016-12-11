@@ -11,20 +11,31 @@
         vm.login = login;
 
         function login(user) {
-            UserService
-                .login(user)
-                //.findUserByCredentials(username, password)
-                .success(function (user) {
-                    if (user === '0') {
-                        vm.error = "No such user";
-                    }
-                    else {
-                        $location.url("/user/" + user._id);
-                    }
-                })
-                .error(function () {
-                    vm.error = "No such user";
-                });
+            if (user) {
+                if (user.username == '' || user.password == '' || user.password == undefined || user.username == undefined) {
+                    $('#loginAlert').removeClass('hidden');
+                    vm.alert = "Enter credentials to login";
+                } else {
+                    $('#loginAlert').addClass('hidden');
+                    //var ret = UserService.findUserByCredentials(user.username, user.password);
+                    var ret = UserService.login(user);
+                    ret
+                        .success(function (user) {
+                            if (user === '0') {
+                                vm.error = "No such user";
+                            }
+                            else {
+                                $location.url("/user/" + user._id);
+                            }
+                        })
+                        .error(function () {
+                            vm.error = "No such user";
+                        });
+                }
+            } else {
+                $('#loginAlert').removeClass('hidden');
+                vm.alert = "Enter credentials to login";
+            }
         }
     }
 
@@ -34,14 +45,16 @@
 
         function register(user) {
             if (user.username === undefined || user.password === undefined || user.password2 === undefined) {
-                vm.error = "Values cannot be blank";
+                $('#registerAlert').removeClass('hidden');
+                vm.alert = 'Please enter the required details';
             }
             else if (user.password != user.password2) {
-                vm.error = "Passwords do not match.";
+                $('#registerAlert').removeClass('hidden');
+                vm.alert = 'Password does not match';
             }
             else {
-                UserService
-                    .createUser(user)
+                $('#registerAlert').addClass('hidden');
+                UserService.createUser(user)
                     .success(function (userObj) {
                         $rootScope.currentUser = userObj;
                         $location.url("/user/" + userObj._id);

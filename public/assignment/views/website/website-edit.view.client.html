@@ -38,7 +38,8 @@
                     </div>
                     <div class="col-xs-2">
                         <div class="navbar-text navbar-right">
-                            <a ng-click="model.updateWebsite(model.website)"><span class="glyphicon glyphicon-ok"></span></a>
+                            <a ng-click="model.updateWebsite(model.website)"><span
+                                    class="glyphicon glyphicon-ok"></span></a>
                         </div>
                     </div>
                 </div>
@@ -67,6 +68,9 @@
         </div>
 
         <div class="col-xs-12 col-sm-7">
+            <div id="editWebAlert" class="alert alert-danger hidden container-fluid">
+                {{model.alert}}
+            </div>
             <form>
                 <div class="form-group">
                     <div class="row">

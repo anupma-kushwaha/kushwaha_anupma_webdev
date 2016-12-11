@@ -20,6 +20,7 @@
                     vm.error = "No websites found!";
                 });
         }
+
         init();
     }
 
@@ -40,18 +41,23 @@
                     vm.error = "No websites found!";
                 });
         }
+
         init();
 
-        function createWebsite(websiteName, websiteDesc) {
-            var website = {name: websiteName, description: websiteDesc};
-            WebsiteService
-                .createWebsite(uid, website)
-                .success(function (website) {
-                    $location.url("/user/" + uid + "/website");
-                })
-                .error(function (error) {
-                    vm.error = "No websites found!";
-                });
+        function createWebsite(website) {
+            if (!website || !website.name || website.name == '') {
+                $('#newWebAlert').removeClass('hidden');
+                vm.alert = 'Website name is required.';
+            } else {
+                WebsiteService
+                    .createWebsite(uid, website)
+                    .success(function (website) {
+                        $location.url("/user/" + uid + "/website");
+                    })
+                    .error(function (error) {
+                        vm.error = "No websites found!";
+                    });
+            }
         }
     }
 
@@ -86,14 +92,19 @@
         init();
 
         function updateWebsite(website) {
-            WebsiteService
-                .updateWebsite(vm.wid, website)
-                .success(function (website) {
-                    $location.url("/user/" + uid + "/website");
-                })
-                .error(function () {
-                    vm.error = "No website found!";
-                });
+            if (!website || !website.name || website.name == '') {
+                $('#editWebAlert').removeClass('hidden');
+                vm.alert = 'Website name is required';
+            } else {
+                WebsiteService
+                    .updateWebsite(vm.wid, website)
+                    .success(function (website) {
+                        $location.url("/user/" + uid + "/website");
+                    })
+                    .error(function () {
+                        vm.error = "No website found!";
+                    });
+            }
         }
 
         function deleteWebsite() {

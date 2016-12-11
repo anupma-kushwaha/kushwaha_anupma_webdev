@@ -37,7 +37,7 @@
                     </div>
                     <div class="col-xs-2">
                         <div class="navbar-text navbar-right">
-                            <a ng-click="model.createPage(model.page.name,model.page.title)"><span
+                            <a ng-click="model.createPage(model.page)"><span
                                     class="glyphicon glyphicon-ok"></span></a>
                         </div>
                     </div>
@@ -67,6 +67,9 @@
         </div>
 
         <div class="col-xs-12 col-sm-7">
+            <div id="newPageAlert" class="alert alert-danger hidden">
+                {{model.alert}}
+            </div>
             <form>
                 <div class="form-group">
                     <div class="row">

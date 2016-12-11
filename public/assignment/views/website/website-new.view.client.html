@@ -1,12 +1,12 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="row">
-
             <div class="col-sm-5 hidden-xs">
                 <div class="row">
                     <div class="col-xs-2">
                         <div class="navbar-text navbar-left">
-                            <a href="#/user/{{model.uid}}/website"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                            <a href="#/user/{{model.uid}}/website"><span
+                                    class="glyphicon glyphicon-chevron-left"></span></a>
                         </div>
                     </div>
                     <div class="col-xs-7">
@@ -16,7 +16,8 @@
                     </div>
                     <div class="col-xs-3">
                         <div class="navbar-text">
-                            <a href="#/user/{{model.uid}}/website/new"><span class="glyphicon glyphicon-plus"></span></a>
+                            <a href="#/user/{{model.uid}}/website/new"><span
+                                    class="glyphicon glyphicon-plus"></span></a>
                         </div>
                     </div>
                 </div>
@@ -37,7 +38,7 @@
                     </div>
                     <div class="col-xs-2">
                         <div class="navbar-text navbar-right">
-                            <a ng-click="model.createWebsite(model.website.name,model.website.description)">
+                            <a ng-click="model.createWebsite(model.website)">
                                 <span class="glyphicon glyphicon-ok"></span></a>
                         </div>
                     </div>
@@ -68,6 +69,9 @@
         </div>
 
         <div class="col-xs-12 col-sm-7">
+            <div id="newWebAlert" class="alert alert-danger hidden container-fluid">
+                {{model.alert}}
+            </div>
             <form>
                 <div class="form-group">
                     <div class="row">
