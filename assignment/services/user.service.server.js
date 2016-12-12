@@ -4,9 +4,7 @@ module.exports = function (app, model) {
     var session = require('express-session');
     var passport = require('passport');
     var LocalStrategy = require('passport-local').Strategy;
-    var FacebookStrategy = require('passport-facebook').Strategy;
     var bcrypt = require("bcrypt-nodejs");
-
 
     app.use(session({
         secret: process.env.SESSION_SECRET || "this is secret",
@@ -14,11 +12,6 @@ module.exports = function (app, model) {
         saveUninitialized: true
     }));
 
-    var facebookConfig = {
-        clientID: process.env.FACEBOOK_CLIENT_ID || "this is secret",
-        clientSecret: process.env.FACEBOOK_CLIENT_SECRET || "this is id",
-        callbackURL: process.env.FACEBOOK_CALLBACK_URL || "this is url"
-    };
 
     app.use(cookieParser());
     app.use(session({secret: process.env.SESSION_SECRET}));
@@ -30,7 +23,6 @@ module.exports = function (app, model) {
     passport.deserializeUser(deserializeUser);
 
     passport.use(new LocalStrategy(localStrategy));
-    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 
     app.post('/api/register', createUser);
     app.get('/api/user', findUser);
@@ -40,65 +32,6 @@ module.exports = function (app, model) {
     app.post('/api/login', passport.authenticate('local'), login);
     app.post('/api/logout', logout);
     app.post('/api/checkLogin', checkLogin);
-    app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
-
-    app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-        successRedirect: '/#/user',
-        failureRedirect: '/#/login'
-    }));
-
-
-    function facebookStrategy(token, refreshToken, profile, done) {
-        model.userModel
-            .findUserByFacebookId(profile.id)
-            .then(
-                function (user) {
-                    var email = '';
-                    var emailParts = ['', ''];
-                    var firstName = profile.displayName;
-                    if (profile.name.givenName)
-                        firstName = profile.name.givenName;
-                    var lastName = '';
-                    if (profile.name.familyName)
-                        lastName = profile.name.familyName;
-
-                    if (user) {
-                        return done(null, user);
-                    } else {
-                        if (profile.emails) {
-                            email = profile.emails[0].value;
-                            emailParts = email.split("@");
-                        }
-                        var newFacebookUser = {
-                            username: emailParts[0],
-                            firstName: firstName,
-                            lastName: lastName,
-                            email: email,
-                            facebook: {
-                                id: profile.id,
-                                token: token
-                            }
-                        };
-                        return model.userModel.createUser(newFacebookUser);
-                    }
-                },
-                function (err) {
-                    if (err) {
-                        return done(err);
-                    }
-                }
-            )
-            .then(
-                function (user) {
-                    return done(null, user);
-                },
-                function (err) {
-                    if (err) {
-                        return done(err);
-                    }
-                }
-            );
-    }
 
     function checkLogin(req, res) {
         res.send(req.isAuthenticated() ? req.user : '0');
@@ -136,6 +69,9 @@ module.exports = function (app, model) {
             findUserByCredentials(req, res);
         } else if (query.username) {
             findUserByUsername(req, res);
+        }
+        else {
+            res.json(user);
         }
 
         function findUserByCredentials(req, res) {
