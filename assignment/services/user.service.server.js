@@ -23,7 +23,7 @@ module.exports = function (app, model) {
     app.post('/api/login', passport.authenticate('local'), login);
     app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
     app.get("/api/user/:uid", findUserById);
-    app.put("/api/user", updateUser);
+    app.put("/api/user/:uid", updateUser);
     app.get("/api/user", findCurrentUser);
     app.delete("/api/user/:uid", deleteUser);
     app.post("/api/checkLogin", checkLogin);
@@ -201,7 +201,7 @@ module.exports = function (app, model) {
         model.userModel.updateUser(user._id, user)
             .then(
                 function (body) {
-                    res.send();
+                    res.sendStatus(200);
                 },
                 function (error) {
                     res.sendStatus(400).send(error);

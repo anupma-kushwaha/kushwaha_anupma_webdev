@@ -128,7 +128,6 @@
         function logout() {
             UserService.logout()
                 .then(function () {
-                    $rootScope.currentUser = null;
                     $location.url("/#/login");
                 })
         }
