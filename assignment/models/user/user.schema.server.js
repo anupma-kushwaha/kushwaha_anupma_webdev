@@ -10,8 +10,8 @@ module.exports = function () {
         email: String,
         phone: String,
         websites: [{type: mongoose.Schema.Types.ObjectId, ref: "WebsiteModel"}],
-        facebook: {
-            id: String,
+        google: {
+            id:    String,
             token: String
         },
         dateCreated: {type: Date, default: Date.now()}

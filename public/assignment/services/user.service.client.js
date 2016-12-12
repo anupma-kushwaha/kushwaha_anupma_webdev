@@ -14,9 +14,15 @@
             "logout": logout,
             "updateUser": updateUser,
             "deleteUser": deleteUser,
-            "checkLogin": checkLogin
+            "checkLogin": checkLogin,
+            "findCurrentUser":findCurrentUser
         };
         return api;
+
+        function findCurrentUser() {
+            var url = "/api/user";
+            return $http.get(url);
+        }
 
         function createUser(user) {
             return $http.post('/api/register', user);

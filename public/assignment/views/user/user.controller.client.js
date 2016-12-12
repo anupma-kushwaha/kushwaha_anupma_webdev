@@ -5,7 +5,7 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController);
 
-    function LoginController($location, UserService) {
+    function LoginController($rootScope, $location, UserService) {
 
         var vm = this;
         vm.login = login;
@@ -17,7 +17,6 @@
                     vm.alert = "Enter credentials to login";
                 } else {
                     $('#loginAlert').addClass('hidden');
-                    //var ret = UserService.findUserByCredentials(user.username, user.password);
                     var ret = UserService.login(user);
                     ret
                         .success(function (user) {
@@ -26,6 +25,7 @@
                                 vm.alert = "No such user";
                             }
                             else {
+                                $rootScope.currentUser = user;
                                 $location.url("/user/" + user._id);
                             }
                         })
@@ -77,8 +77,8 @@
         var userId = ($routeParams.uid);
 
         function init() {
-            UserService
-                .findUserById(userId)
+            var ret = UserService.findCurrentUser();
+            ret
                 .success(function (user) {
                     if (user != '0') {
                         vm.user = user;
@@ -128,6 +128,7 @@
         function logout() {
             UserService.logout()
                 .then(function () {
+                    $rootScope.currentUser = null;
                     $location.url("/#/login");
                 })
         }
