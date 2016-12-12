@@ -32,7 +32,8 @@
                     </div>
                     <div class="col-xs-8 col-sm-10">
                         <div class="navbar-header">
-                            <a class="navbar-brand" href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{page._id}}">Edit Page</a>
+                            <a class="navbar-brand" href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{page._id}}">Edit
+                                Page</a>
                         </div>
                     </div>
                     <div class="col-xs-2">
@@ -67,10 +68,10 @@
         </div>
 
         <div class="col-xs-12 col-sm-7">
+            <div id="editPageAlert" class="alert alert-danger hidden">
+                {{model.alert}}
+            </div>
             <form>
-                <div id="editPageAlert" class="alert alert-danger hidden">
-                    {{model.alert}}
-                </div>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-xs-12">

@@ -14,13 +14,9 @@ module.exports = function () {
         updateUser: updateUser,
         deleteUser: deleteUser,
         setModel: setModel,
-        findUserByFacebookId: findUserByFacebookId
+        findUserByGoogleId: findUserByGoogleId
     };
     return api;
-
-    function findUserByFacebookId (facebookId) {
-        return User.findOne({'facebook.id': facebookId});
-    }
 
     function setModel(_model) {
         model = _model;
@@ -101,6 +97,10 @@ module.exports = function () {
                     });
             }
         );
+    }
+
+    function findUserByGoogleId(googleId) {
+        return UserModel.findOne({'google.id': googleId});
     }
 
 };

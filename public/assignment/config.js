@@ -59,7 +59,6 @@
                 controllerAs: "model",
                 resolve: {checkLogin: checkLogin}
             })
-
             .when("/user/:uid/website/:wid/page/:pid/widget", {
                 templateUrl: "views/widget/widget-list.view.client.html",
                 controller: "WidgetListController",
@@ -93,7 +92,7 @@
             var deferred = $q.defer();
             UserService.checkLogin()
                 .success(function (user) {
-                    if(user != '0')
+                    if (user != '0')
                         deferred.resolve();
                     else {
                         deferred.reject();

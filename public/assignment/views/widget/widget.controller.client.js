@@ -85,9 +85,9 @@
         init();
 
         function createWidget(widget, widgetType) {
-            if (!widget || !widget.name || widget.name == '') {
+            if (!vm.widget || vm.widget.name === undefined || vm.widget.name == '') {
                 $('#newWidgetAlert').removeClass('hidden');
-                vm.alert = 'name required';
+                vm.alert = 'Widget name is required.';
             } else {
                 vm.widget.widgetType = widgetType;
                 WidgetService.createWidget(vm.pid, vm.widget)
@@ -129,7 +129,7 @@
         init();
 
         function updateWidget(widget) {
-            if (!vm.widget || !vm.widget.name || vm.widget.name == '') {
+            if (!vm.widget || vm.widget.name === undefined || vm.widget.name == '') {
                 $('#editWidgetAlert').removeClass('hidden');
                 vm.alert = 'Widget name is required.';
             } else {

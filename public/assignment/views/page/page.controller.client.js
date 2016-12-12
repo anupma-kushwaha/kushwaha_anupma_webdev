@@ -50,7 +50,7 @@
         function createPage(page) {
             if (!page || !page.name || page.name == '') {
                 $('#newPageAlert').removeClass('hidden');
-                vm.alert = 'name required';
+                vm.alert = 'Page name is required';
             } else {
                 PageService
                     .createPage(wid, page)
@@ -99,7 +99,7 @@
         function updatePage(page) {
             if (!page || !page.name || page.name == '') {
                 $('#editPageAlert').removeClass('hidden');
-                vm.alert = 'name required';
+                vm.alert = 'Page name is required';
             } else {
                 PageService
                     .updatePage(vm.pid, page)

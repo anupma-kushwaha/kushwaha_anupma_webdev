@@ -7,40 +7,25 @@
 
         var api = {
             "createUser": createUser,
-            "findCurrentUser": findCurrentUser,
             "findUserById": findUserById,
             "findUserByUsername": findUserByUsername,
             "findUserByCredentials": findUserByCredentials,
+            "login": login,
+            "logout": logout,
             "updateUser": updateUser,
             "deleteUser": deleteUser,
-            "login": login,
             "checkLogin": checkLogin,
-            "logout": logout
+            "findCurrentUser":findCurrentUser
         };
         return api;
-
-        function logout() {
-            return $http.post("/api/logout");
-        }
-
-        function checkLogin() {
-            var url = "/api/checkLogin";
-            return $http.post(url);
-        }
-
-        function login(user) {
-            var url = "/api/login";
-            return $http.post(url, user);
-        }
-
-        function createUser(user) {
-            var url = "/api/user";
-            return $http.post(url, user);
-        }
 
         function findCurrentUser() {
             var url = "/api/user";
             return $http.get(url);
+        }
+
+        function createUser(user) {
+            return $http.post('/api/register', user);
         }
 
         function findUserById(userId) {
@@ -66,6 +51,18 @@
         function deleteUser(userId) {
             var url = "/api/user/" + userId;
             return $http.delete(url);
+        }
+
+        function login(user) {
+            return $http.post("/api/login", user);
+        }
+
+        function logout(user) {
+            return $http.post("/api/logout");
+        }
+
+        function checkLogin() {
+            return $http.post('/api/checkLogin');
         }
     }
 })();

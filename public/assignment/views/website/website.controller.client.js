@@ -94,7 +94,7 @@
         function updateWebsite(website) {
             if (!website || !website.name || website.name == '') {
                 $('#editWebAlert').removeClass('hidden');
-                vm.alert = 'Website name is required.';
+                vm.alert = 'Website name is required';
             } else {
                 WebsiteService
                     .updateWebsite(vm.wid, website)

@@ -12,18 +12,20 @@
 
         function login(user) {
             if (user) {
-                if (user.username == '' || user.password == '') {
+                if (user.username == '' || user.password == '' || user.password == undefined || user.username == undefined) {
                     $('#loginAlert').removeClass('hidden');
                     vm.alert = "Enter credentials to login";
                 } else {
                     $('#loginAlert').addClass('hidden');
-                    UserService
-                        .login(user)
+                    var ret = UserService.login(user);
+                    ret
                         .success(function (user) {
                             if (user === '0') {
-                                vm.error = "No such user";
+                                $('#loginAlert').removeClass('hidden');
+                                vm.alert = "No such user";
                             }
                             else {
+                                $rootScope.currentUser = user;
                                 $location.url("/user/" + user._id);
                             }
                         })
@@ -38,25 +40,25 @@
         }
     }
 
-    function RegisterController($location, UserService) {
+    function RegisterController($rootScope, $location, UserService) {
         var vm = this;
         vm.register = register;
 
         function register(user) {
-            if (!user || user.username == '' || !user.password || user.password == '') {
+            if (user.username === undefined || user.password === undefined || user.password2 === undefined) {
                 $('#registerAlert').removeClass('hidden');
-                vm.alert = 'Please enter the required fields';
-            } else if (user.password != user.password2) {
+                vm.alert = 'Please enter the required details';
+            }
+            else if (user.password != user.password2) {
                 $('#registerAlert').removeClass('hidden');
                 vm.alert = 'Password does not match';
-            } else {
+            }
+            else {
                 $('#registerAlert').addClass('hidden');
-                var userJson = {username: username, password: password};
-                UserService
-                    .createUser(userJson)
-                    .success(function (user) {
-                        $rootScope.currentUser = user;
-                        $location.url("/user/" + user._id);
+                UserService.createUser(user)
+                    .success(function (userObj) {
+                        $rootScope.currentUser = userObj;
+                        $location.url("/user/" + userObj._id);
                     })
                     .error(function (error) {
                         vm.error = "Cannot create a user";
@@ -65,19 +67,18 @@
         }
     }
 
-    function ProfileController($rootScope, $routeParams, $location, UserService) {
+    function ProfileController($routeParams, $location, UserService) {
         var vm = this;
         vm.updateProfile = updateProfile;
         vm.getWebsites = getWebsites;
         vm.deleteUser = deleteUser;
         vm.logout = logout;
 
-        /*var userId = ($routeParams.uid);*/
+        var userId = ($routeParams.uid);
 
         function init() {
-            UserService
-            /*.findUserById(userId)*/
-                .findCurrentUser
+            var ret = UserService.findCurrentUser();
+            ret
                 .success(function (user) {
                     if (user != '0') {
                         vm.user = user;
@@ -89,13 +90,6 @@
         }
 
         init();
-
-        function logout() {
-            UserService.logout()
-                .success(function () {
-                    $location.url("/login");
-                })
-        }
 
         function updateProfile() {
             user = vm.user;
@@ -129,8 +123,13 @@
                 .error(function () {
                     vm.error = "No such user";
                 });
+        }
 
-
+        function logout() {
+            UserService.logout()
+                .then(function () {
+                    $location.url("/#/login");
+                })
         }
     }
 
