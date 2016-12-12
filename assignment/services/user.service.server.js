@@ -177,7 +177,7 @@ module.exports = function (app, model) {
             lastName: user.username
         };
 
-        if(mainuser.password)
+        if (mainuser.password)
             mainuser.password = bcrypt.hashSync(mainuser.password);
 
         model.userModel.createUser(mainuser)
