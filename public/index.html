@@ -1,74 +1,272 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css"/>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.css"/>
-    <link href="css/style.css" rel="stylesheet"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="UTF-8">
-    <title>WebDev</title>
-</head>
+<html>
+<title>WebAppMaker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<body id="myPage">
 
-<body>
-
-<div class="container-fluid">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Welcome visitor!</a>
-                <button class='navbar-toggle collapsed' data-toggle='collapse' data-target='.navHeaderCollapse'>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+<!-- Navbar -->
+<div class="w3-top">
+    <ul class="w3-navbar w3-theme-d2 w3-left-align">
+        <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
+            <a class="w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i
+                    class="fa fa-bars"></i></a>
+        </li>
+        <li><a href="#" class="w3-teal"><i class="fa fa-home w3-margin-right"></i>Welcome!</a></li>
+        <li class="w3-hide-small"><a href="#about" class="w3-hover-white">About</a></li>
+        <li class="w3-hide-small"><a href="#work" class="w3-hover-white">My work</a></li>
+        <li class="w3-hide-small"><a href="#webdev" class="w3-hover-white">Webdev</a></li>
+        <li class="w3-hide-small"><a href="#contact" class="w3-hover-white">Contact</a></li>
+        <li class="w3-hide-small w3-dropdown-hover">
+            <a href="javascript:void(0);" title="Notifications">More <i class="fa fa-caret-down"></i></a>
+            <div class="w3-dropdown-content w3-white w3-card-4">
+                <a href="https://github.com/anupma-kushwaha" target="_blank">Github</a>
+                <a href="https://www.linkedin.com/in/anupmak" target="_blank">LinkedIn</a>
+                <a href="https://docs.google.com/document/d/1eP8wPDAbBM_nPEBLlhqZEJsSFdw3PbjQgTDyz_VqKkM/edit?usp=sharing"
+                   target="_blank">Resume</a>
             </div>
-            <div class="collapse navbar-collapse" id="navHeaderCollapse">
-                <ul class="nav navbar-nav pull-right">
-                    <li class="navbutton"><a class="padding-10" href="project/index.html" target="_blank">Project</a>
-                    </li>
-                    <li class="navbutton"><a class="padding-10" href="assignment/index.html"
-                                             target="_blank">Assignment</a></li>
-                    <li><a class="padding-10" href="test/index.html" target="_blank">MongoDB</a></li>
-                    <li><a class="padding-10" href="https://github.com/anupma-kushwaha/kushwaha_anupma_webdev"
-                           target="_blank">Github</a></li>
-                    <li><a class="padding-10" href="http://nodejs-akushwaha.rhcloud.com/"
-                           target="_blank">OpenShiftLink</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        </li>
+    </ul>
 
-    <div class="container-fluid">
-        <h1 class="align-center">
-            ANUPMA KUSHWAHA
-        </h1>
-        <table class='table borderless'>
-            <tr>
-                <td>
-                    <img width="80%" src="/img/anu.jpg" align="center">
-                </td>
-                <td>
-                    <p>
-                        Hi !<br><br>
-                        This is Anupma Kushwaha. I am enthusiastic about technology, wondering places and music.
-                        <br><br>
-                        Top right are the links to my course work assignments and project. Please have a look and
-                        provide your
-                        feedback.
-                        <br><br>
-                        Thanks.
-                    </p>
-                </td>
-            </tr>
-        </table>
+    <!-- Navbar on small screens -->
+    <div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium">
+        <ul class="w3-navbar w3-left-align w3-theme">
+            <li><a href="#about">About</a></li>
+            <li><a href="#work">My work</a></li>
+            <li><a href="#webdev">Webdev</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="w3-dropdown-hover">
+                <a href="javascript:void(0);" title="Notifications">More <i class="fa fa-caret-down"></i></a>
+                <div class="w3-dropdown-content w3-light-grey w3-card-4">
+                    <a href="https://github.com/anupma-kushwaha" target="_blank">Github</a>
+                    <a href="https://www.linkedin.com/in/anupmak" target="_blank">LinkedIn</a>
+                    <a href="https://docs.google.com/document/d/1eP8wPDAbBM_nPEBLlhqZEJsSFdw3PbjQgTDyz_VqKkM/edit?usp=sharing"
+                       target="_blank">Resume</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Image Header -->
+<div class="w3-display-container w3-animate-opacity">
+    <img src="/img/sailboat.jpg" alt="boat" style="width:100%;min-height:350px;max-height:600px;">
+    <div class="w3-container w3-display-bottomright w3-margin-bottom">
+        <header class="w3-container w3-teal">
+            <h4>And miles to go before I sleep.
+                <h6 align="right">- ROBERT FROST</h6></h4>
+        </header>
+    </div>
+</div>
+
+<!-- About Container -->
+<div class="w3-container w3-padding-64 w3-center" id="about">
+    <h2>ABOUT ME</h2>
+    <p>Hi, I am <b>Anupma Kushwaha</b>, pursuing MASTERS in COMPUTER SCIENCE from <b>NORTHEASTERN UNIVERSITY</b>,
+        BOSTON.</p>
+    <p>I am passionate about technology, travelling and music.</p>
+    <div class="w3-row"><br>
+        <img src="/img/anu.jpg" alt="Boss" style="width:25%" class="w3-circle w3-hover-opacity">
+    </div>
+</div>
+
+<!-- Work Row -->
+<div class="w3-row-padding w3-padding-64 w3-theme-l1" id="work">
+
+    <div class="w3-quarter">
+        <h2>My Work</h2>
+        <p align="justify">I worked on multiple projects which gave me wonderful learning opportunities and exposure to
+            various technologies. I would like to share few of them here. Please feel free to have a look and provide
+            your feedback through emails. I appreciate your inputs.</p>
     </div>
 
-    <nav class="navbar navbar-inverse navbar-fixed-bottom"></nav>
+    <div class="w3-quarter">
+        <div class="w3-card-2 w3-white">
+            <img src="/img/website.jpg" alt="Vernazza" style="width:100%">
+            <div class="w3-container">
+                <h3 align="center"><a href="assignment/index.html" target="_blank">WebAppMaker</a></h3>
+                <p align="justify">
+                    This project create Websites without any coding knowledge. This works well for both mobile devices and the
+                    traditional websites. The user can add new websites, pages and widgets to the page. These widgets then can be sorted by simply dragging
+                    and droping.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="w3-quarter">
+        <div class="w3-card-2 w3-white">
+            <img src="/img/sociali.jpg" alt="Cinque Terre" style="width:95%; padding-left: 18px;">
+            <div class="w3-container">
+                <h3 align="center"><a href="https://github.com/anupma-kushwaha/sociali" target="_blank">Sociali</a></h3>
+                <p align="justify">
+                    Project finds user location and suggest events around them. Events are picked within a distance of
+                    given radius. User preferences for event type is stored, further vents are picked accordingly and
+                    are displayed on google maps.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="w3-quarter">
+        <div class="w3-card-2 w3-white">
+            <img src="/img/senti.jpg" alt="Monterosso" style="width:100%">
+            <div class="w3-container">
+                <h3 align="center"><a href="https://github.com/anupma-kushwaha/info-retrieval/tree/master/6-NaiveBayesClassifier"
+                       target="_blank">Sentiment Analysis</a></h3>
+                <p align="justify">
+                    Project implemented add-1 (Laplace) smoothing and classification. For this classification I
+                    implemented Naive Bayes text categorization system to predict whether movie reviews are positive or
+                    negative. This is categorization called “sentiment analysis”. This can help companies with the feedback.
+                </p>
+            </div>
+        </div>
+    </div>
 
 </div>
+
+<!-- webdev Row -->
+<div class="w3-row-padding w3-center w3-padding-64" id="webdev">
+    <h2>CS5610 - Webdev Work</h2>
+    <p>Choose a webdev work that you want to explore.</p><br>
+    <div class="w3-third w3-margin-bottom">
+        <ul class="w3-ul w3-border w3-hover-shadow">
+            <li class="w3-theme">
+                <p class="w3-xlarge">Assignment</p></li>
+            </li>
+            <li class="w3-padding-16">
+                <h2 class="w3-large"></i>Click to explore all assignments I worked on, through out semester.</h2>
+            </li>
+            <li class="w3-theme-l5 w3-padding-24">
+                <a class="w3-btn w3-teal w3-padding-large" href="assignment/index.html" target="_blank">
+                    <i class="fa fa-check"></i> Explore Me
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="w3-third w3-margin-bottom">
+        <ul class="w3-ul w3-border w3-hover-shadow">
+            <li class="w3-theme-l2">
+                <p class="w3-xlarge">Project</p>
+            </li>
+            <li class="w3-padding-16"><h2 class="w3-large"></i>Click to explore project I worked on in this
+                semester.</h2>
+            </li>
+            <li class="w3-theme-l5 w3-padding-24">
+                <a class="w3-btn w3-teal w3-padding-large" href="http://nodejs-akushwaha.rhcloud.com/" target="_blank">
+                    <i class="fa fa-check"></i> Explore me</a></li>
+        </ul>
+    </div>
+
+    <div class="w3-third w3-margin-bottom">
+        <ul class="w3-ul w3-border w3-hover-shadow">
+            <li class="w3-theme">
+                <p class="w3-xlarge">MongoDB</p>
+            </li>
+            <li class="w3-padding-16"><h2 class="w3-large"></i>Click to explore insertion and deletion of records in
+                mongodb</h2>
+            </li>
+            <li class="w3-theme-l5 w3-padding-24">
+                <a class="w3-btn w3-teal w3-padding-large" href="test/index.html" target="_blank">
+                    <i class="fa fa-check"></i> Explore me</a></li>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Contact Container -->
+<div class="w3-container w3-padding-64 w3-theme-l5" id="contact">
+    <div class="w3-row">
+        <div class="w3-col m5">
+            <div class="w3-padding-16"><span class="w3-xlarge w3-border-teal w3-bottombar">Contact</span></div>
+            <h3>Address</h3>
+            <p>Swing by for a cup of coffee, or whatever.</p>
+            <p><i class="fa fa-map-marker w3-text-teal w3-xlarge"></i>  Boston, MA, US</p>
+            <p><i class="fa fa-phone w3-text-teal w3-xlarge"></i>  +00 1-512-384-1419</p>
+            <p><i class="fa fa-envelope-o w3-text-teal w3-xlarge"></i>  anupma.kw@gmail.com</p>
+        </div>
+        <div class="w3-col m7">
+            <form class="w3-container w3-card-4 w3-padding-16 w3-white">
+                <div class="w3-group">
+                    <label class="w3-label">Name</label>
+                    <input class="w3-input" type="text" name="Name" required placeholder="Anupma">
+                </div>
+                <div class="w3-group">
+                    <label class="w3-label">Email</label>
+                    <input class="w3-input" type="text" name="Email" required placeholder="anupma.kw@gmail.com">
+                </div>
+                <div class="w3-group">
+                    <label class="w3-label">Message</label>
+                    <input class="w3-input" type="text" name="Message" required placeholder="Hi there!">
+                </div>
+                <input class="w3-check" type="checkbox" checked name="Like">
+                <label class="w3-validate">I Like it!</label>
+                <button type="submit" class="w3-btn w3-right w3-theme">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Google Maps -->
+<div id="googleMap" style="width:100%;height:420px;"></div>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script>
+    var myCenter = new google.maps.LatLng(42.361145, -71.057083);
+
+    function initialize() {
+        var mapProp = {
+            center: myCenter,
+            zoom: 5,
+            scrollwheel: false,
+            draggable: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+        var marker = new google.maps.Marker({
+            position: myCenter,
+        });
+
+        marker.setMap(map);
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-32 w3-theme-d1 w3-center">
+    <h4>Follow Me</h4>
+    <a class="w3-btn-floating w3-teal" href="javascript:void(0)" title="Facebook"><i class="fa fa-facebook"></i></a>
+    <a class="w3-btn-floating w3-teal" href="javascript:void(0)" title="Twitter"><i class="fa fa-twitter"></i></a>
+    <a class="w3-btn-floating w3-teal" href="javascript:void(0)" title="Google +"><i class="fa fa-instagram"></i></a>
+    <a class="w3-btn-floating w3-teal" href="https://plus.google.com/u/0/101976156675927494513" target="_blank"
+       title="Google +"><i class="fa fa-google-plus"></i></a>
+    <a class="w3-btn-floating w3-teal w3-hide-small" href="https://www.linkedin.com/in/anupmak" target="_blank"
+       title="Linkedin"><i class="fa fa-linkedin"></i></a>
+    <p>Copyright 2016 by Anupma Kushwaha</p>
+
+    <div style="position:relative;bottom:100px;z-index:1;" class="w3-tooltip w3-right">
+        <span class="w3-text w3-padding w3-teal w3-hide-small">Go To Top</span>
+        <a class="w3-btn w3-theme" href="#myPage"><span class="w3-xlarge">
+    <i class="fa fa-chevron-circle-up"></i></span></a>
+    </div>
+</footer>
+
+<!-- Script For Side Navigation -->
+<script>
+    // Used to toggle the menu on smaller screens when clicking on the menu button
+    function openNav() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+</script>
+
 </body>
 </html>
-
-
-
